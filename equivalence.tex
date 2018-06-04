@@ -1,0 +1,253 @@
+\documentclass[11pt]{article}
+
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage[arrow]{xy}
+
+\pagestyle{headings}
+
+\theoremstyle{definition}
+\newtheorem*{defn}{Definition}
+
+\theoremstyle{plain}
+\newtheorem{theo}{Theorem}
+
+\theoremstyle{plain}
+\newtheorem{prop}{Proposition}
+
+\theoremstyle{plain}
+\newtheorem*{lem}{Lemma}
+
+\newcommand\w{30}
+\newcommand\x{30}
+\newcommand\y{60}
+\newcommand\z{90}
+
+\begin{document}
+
+\author{Stephen Liu}
+\title{Equivalence of Categories}
+\date{May 29, 2018}
+
+\maketitle
+
+\subsection*{Some Definitions}
+
+We begin with some definitions characterizing different properties of functors.
+
+\begin{defn}[Essentially Surjective on Objects]
+The functor $F:\mathscr{A}\to\mathscr{B}$ is said to be essentially surjective on objects if for all $B\in\mathscr{B} $ there exists an $A\in\mathscr{A}$ such that $F(A)\cong B$.
+\end{defn}
+
+\begin{defn}[Faithful]
+The functor $F:\mathscr{A}\to\mathscr{B}$ is said to be faithful if for all $A$, $A' \in \mathscr{A}$ the map $\mathscr{A}(A, A') \to \mathscr{B}(B, B')$ is injective
+\end{defn}
+
+\begin{defn}[Full]
+The functor $F:\mathscr{A}\to\mathscr{B}$ is said to be full if for all $A$, $A' \in \mathscr{A}$ the map $\mathscr{A}(A, A') \to \mathscr{B}(B, B')$ is surjective
+\end{defn}
+
+We should think of fullness and faithfulness as local properties, ie. properties local with respect to two fixed objects in the category.
+
+\begin{prop}
+The identity functor $1_{\mathscr{A}}:\mathscr{A}\to\mathscr{A}$ is full, faithful and essentially surjective on objects.
+\end{prop}
+
+\begin{proof}
+Fix $A,A'\in\mathscr{A}$. Then $1_{\mathscr{A}}(A)=A$, so $1_{\mathscr{A}}(A)$ is certainly isomorphic to $A$. Hence $1_{\mathscr{A}}$ is essentially surjective on objects. Let $f,g\in\mathscr{A}(A,A')$ such that $1_{\mathscr{A}}(f)=1_{\mathscr{A}}(g)$. Since $1_{\mathscr{A}}(f)=f$, $1_{\mathscr{A}}$ is surjective and so full, and since $1_{\mathscr{A}}(g)=g$, this also means $f=g$. So $1_{\mathscr{A}}$ is also faithful. 
+\end{proof}
+
+\subsection*{Equivalence}
+
+Now we want to characterize what it means for two categories to be ``essentially the same''. Taking analogy from Algebra, we might first want to say that two categories are ``essentially the same'' if they are isomorphic to each other, that is, if there is a pair of functors $F$ and $G$ that compose to the appropriate identity functors. However, it turns out that this definition is too strict and it is instead useful to think of categories as being ``essentially the same'' when there is a pair of functors between them that compose to the identity functors \emph{up to isomorphism}. This captures the idea that two categories might behave the same way except they have different numbers of isomorphic ``copies'' of the same objects.
+
+\begin{defn}[Equivalence of Categories]
+An equivalence between categories $\mathscr{A}$ and $\mathscr{B}$ consists of a pair of functors $F:\mathscr{A}\to\mathscr{B}$ and $G:\mathscr{B}\to\mathscr{A}$ and a pair of natural isomorphisms $\eta:1_{\mathscr{A}} \to G\circ F$ and $\varepsilon: F\circ G \to 1_{\mathscr{B}}$. If an equivalence exists between $\mathscr{A}$ and $\mathscr{B}$, then we say $\mathscr{A}$ is equivalent to $\mathscr{B}$ and we write $\mathscr{A}\simeq\mathscr{B}$.
+\end{defn}
+
+Using this definition to show two categories are equivalent requires us to find two functors that satisfy the naturality conditions, however, we often only begin with one functor and it is not always obvious how to construct the other functor that we need. Similar to the helpful theorem in Group Theory that a bijective group homomorphism is a group isomorphism, below is a theorem that gives us an alternative characterization of categorical equivalence that relies on only one functor.
+
+\begin{theo}
+$F:\mathscr{A}\to\mathscr{B}$ is an equivalence if and only if it is full, faithful, and essentially surjective on objects.
+\end{theo}
+
+\begin{proof}
+
+\textbf{Equivalence $\implies$ Full, Faithful, Essentially Surjective on Objects:} 
+
+First let us assume $F$ is an equivalence. That means there is a $G:\mathscr{B}\to\mathscr{A}$ such that there are natural isomorphisms $\eta: 1_{\mathscr{A}} \to G\circ F$ and $\varepsilon: F \circ G \to 1_{\mathscr{B}}$
+
+\emph{Essentially Surjective on Objects:}
+
+Let $B\in\mathscr{B}$. We need to show there is an $A\in\mathscr{A}$ such that $F(A)\cong B$. $\varepsilon$ admits an isomorphism $\varepsilon_{B} : F(G(B)) \to B$, so $F(G(B))\cong B$ and letting $A=G(B)$ we are done.
+
+\emph{Faithfulness:}
+
+Let $f,g:A\to A' \in \mathscr{A}(A, A')$ such that $F(f)=F(g)$. We need to show that $f=g$. From $\eta$ we have the following naturality squares for $f$ and $g$.
+
+\begin{equation*}
+\begin{xy}
+(0,0)*+{A}="a"; (30,0)*+{G(F(A))}="gfa";%
+(0,-30)*+{A'}="ap"; (30,-30)*+{G(F(A'))}="gfap";
+(70,0)*+{A}="a2"; (100,0)*+{G(F(A))}="gfa2";%
+(70,-30)*+{A'}="ap2"; (100,-30)*+{G(F(A'))}="gfap2";
+{\ar "a"; "gfa"}?*!/_3mm/{\eta_{A}};
+{\ar "a"; "ap"}?*!/^3mm/{g};
+{\ar "ap"; "gfap"}?*!/_3mm/{\eta_{A'}};
+{\ar "gfa";"gfap"}?*!/_9mm/{G(F(g))};
+{\ar "a2"; "gfa2"}?*!/_3mm/{\eta_{A}};
+{\ar "a2"; "ap2"}?*!/^3mm/{f};
+{\ar "ap2"; "gfap2"}?*!/_3mm/{\eta_{A'}};
+{\ar "gfa2";"gfap2"}?*!/_9mm/{G(F(f))};
+\end{xy}
+\end{equation*}
+
+From commutativity on the left naturality square we have that $\eta_{A'} \circ f = G(F(f)) \circ \eta_{A}$ and similarly from the right naturality square we have that $G(F(g)) \circ \eta_{A} = \eta_{A'} \circ g$ and since $F(f)=F(g)$, putting the two equations together  we can write $\eta_{A'} \circ f = \eta_{A'} \circ g$. Since $\eta_{A'}$ is an isomorphism, 
+left composing $\eta_{A'}^{-1}$ on both sides we have $f=g$. So $F$ is faithful.
+
+\emph{Fullness:}
+
+Let $g\in\mathscr{B}(F(A),F(A'))$. We need to show there is an morphism in $\mathscr{A}(A,A')$ such that $g$ is $F$ of that morphism. Our first move might be to look at the naturality square from $\varepsilon$:
+
+\begin{equation*}
+\begin{xy}
+(0,0)*+{FGFA}="a"; (30,0)*+{FA}="b";%
+(0,-30)*+{FGFA'}="c"; (30,-30)*+{FA'}="d";
+{\ar "a"; "b"}?*!/_3mm/{\varepsilon_{FA}};
+{\ar "a"; "c"}?*!/^8mm/{FGFg};
+{\ar "c"; "d"}?*!/_3mm/{\varepsilon_{FA'}};
+{\ar "b";"d"}?*!/_3mm/{g};
+\end{xy}
+\end{equation*}
+
+Our goal then would be to try to write $\varepsilon_{FA}$ as F of some morphism, which we can then turn around since each $\varepsilon_{FA}$ is an isomorphism. Then we can use commutativity to express $g$ as the composition of $F$ applied to some morphisms, which by functoriality is $F$ applied to some composition of morphisms.
+
+With that in mind let's take a closer look at the naturality of $\varepsilon$ and employ a trick, which we will call the \emph{naturality of $\varepsilon$ with respect to itself}. For any $B\in\mathscr{B}$, $\varepsilon_{B}:FGB\to B$ is an isomorphism. Applying $F\circ G$ to $\varepsilon_{B}$, we also have $FG\varepsilon_{B}:FGFGB\to FGB$ which is also an isomorphism, and in fact we have the naturality square
+
+\begin{equation*}
+\begin{xy}
+(0,0)*+{FGFGB}="a"; (30,0)*+{FGB}="b";%
+(0,-30)*+{FGB}="c"; (30,-30)*+{B}="d";
+{\ar "a"; "b"}?*!/_3mm/{FG\varepsilon_{B}};
+{\ar "a"; "c"}?*!/^6mm/{\varepsilon_{FGB}};
+{\ar "c"; "d"}?*!/_3mm/{\varepsilon_{B}};
+{\ar "b";"d"}?*!/_3mm/{\varepsilon_{B}};
+\end{xy}
+\end{equation*}
+
+So $\varepsilon_{B} \circ \varepsilon_{FGB} = \varepsilon_{B} \circ FG\varepsilon_{B}$ and since $\varepsilon_{B}$ is an isomorphism, that means we have $\varepsilon_{FGB} = FG\varepsilon_{B}$. Now we can try to come up with a commutative diagram that allows us to get our desired expression for $g$. First for $A,A'$ we can pick the following isomorphisms:
+
+\begin{equation*}
+\begin{aligned}
+&\alpha: GB \cong A \\
+&\alpha': GB' \cong A'
+\end{aligned}
+\end{equation*}
+
+and we can now extend our original naturality square containing $g$ with the following diagram:
+
+\begin{equation*}
+\begin{xy}
+(0,0)*+{FGB}="v1"; (\w,0)*+{FGFGB}="v2";%
+(0,-\x)*+{FA}="v3"; (\w,-\x)*+{FGFA}="v4";%
+(0,-\y)*+{FA'}="v5"; (\w,-\y)*+{FGFA'}="v6";%
+(0,-\z)*+{FGB'}="v7";(\w,-\z)*+{FGFGB'}="v8";
+{\ar "v1";"v3"}?*!/^4mm/{F\alpha};
+{\ar "v3";"v5"}?*!/^4mm/{g};
+{\ar "v5";"v7"}?*!/^8mm/{F\alpha'^{-1}};
+{\ar "v2";"v4"}?*!/_6mm/{FGF\alpha};
+{\ar "v4";"v6"}?*!/_6mm/{FGg};
+{\ar "v6";"v8"}?*!/_10mm/{FGF\alpha'^{-1}};
+{\ar "v2";"v1"}?*!/^2mm/{\varepsilon_{FGB}};
+{\ar "v4";"v3"}?*!/^2mm/{\varepsilon_{FA}};
+{\ar "v6";"v5"}?*!/^2mm/{\varepsilon_{FA'}};
+{\ar "v8";"v7"}?*!/^2mm/{\varepsilon_{FGB'}};
+\end{xy}
+\end{equation*}
+
+and rewriting $\varepsilon_{FGB}$ as $FG\varepsilon_{B}$ and $\varepsilon_{FGB'}$ as $FG\varepsilon_{B'}$ we can write $g$ as $F\alpha'^{-1} \circ FG\varepsilon_{B'} \circ FGF\alpha'^{-1} \circ FGg \circ FG\varepsilon_{B}^{-1} \circ F\alpha^{-1}$. So $F$ is full.
+
+\textbf{Full, Faithful, Essentially Surjective on Objects $\implies$Equivalence:} 
+
+Now let us assume $F$ is full, faithful and essentially surjective on objects. We need to construct a functor $G:\mathscr{B}\to\mathscr{A}$ which admits the two required natural isomorphisms. Since $F$ is essentially surjective on objects, for all $B\in\mathscr{B}$, there is an $A\in\mathscr{A}$ such that $F(A)\cong B$. By the Axiom of Choice, we can pick one such $A$ such that $\alpha_{A}:B\cong F(A)$. So let's define for $G$ the mapping on objects by $G(B)=A$. Now we also need to define the mapping on morphisms. Take $g:B\to B'$, we want to define a $G(g):A\to A'$. Using $\alpha_{A}$ above, we have $F(A)\overset{\alpha_{A}^{-1}}{\cong}B\overset{g}{\rightarrow}B'\overset{\alpha_{A'}}{\cong}F(A')$ and since $F$ is faithful and full, there is a unique $f:A\to A'$ such that $F(f)=\alpha_{A'} \circ g \circ \alpha_{A}^{-1}$. So we define $G(g)$ to be this $f$.
+
+Now we have to check that $G$ is in fact functorial.
+
+Consider $1_{B}:B\to B$. By above, we know there is a unique $f:A\to A$ such that $G(1_{B})=f$ and $F(f)=\alpha_{A} \circ 1_{B} \circ \alpha_{A}^{-1}$ where $\alpha_{A}:B \cong F(A)$. Since $f$ is a unique morphism from $A$ to $A$, and $1_{A}$ goes from $A$ to $A$, we must conclude that $f=1_{A}$. So $G(1_{B})=1_{A}$.
+
+Now suppose $g:B \to B'$, $k:B' \to B''$. By above, $G(g)$ is some $f$ where $F(f) = \alpha_{A'} \circ g \circ \alpha_{A}^{-1}$ and similarly, $G(k)$ is some $h$ where $F(h) = \alpha_{A''} \circ k \circ \alpha_{A'}^{-1}$. So $G(k) \circ G(g) = h \circ f$ and by functoriality of $F$, $F(h \circ f) = F(h) \circ F(f)= \alpha_{A''} \circ k \circ \alpha_{A'}^{-1} \circ \alpha_{A'} \circ g \circ \alpha_{A}^{-1} = \alpha_{A''} \circ k \circ g \circ \alpha_{A}^{-1}$. Now, $k \circ g: B \to B''$ and $G(k \circ g)$ is some $j$ where $F(j)=\alpha_{A''} \circ k \circ g \circ \alpha_{A}^{-1}$, so $F(j)=F(h \circ k)$ and by faithfulness of $F$, that means $j=h \circ k$.
+
+So $G$ is in fact functorial. Finally we need to check that $G$ gives use the natural isomorphism we need.
+
+Fix $A,A'\in\mathscr{A}$ and $f:A \to A'$. We need to construct a natural isomorphisms $\eta_{A}:A \to G(F(A))$. To show $\eta_{A}$ is an isomorphism is easy since $F(A) \overset{\alpha_{A}^{-1}}{\cong}B$ and $G(B)=A$, and since functors preserve isomorphisms, we have $G(F(A)) \cong G(B) = A$. Now we need to check that the naturality square for $\eta_{A}$ holds:
+
+\begin{equation*}
+\begin{xy}
+(0,0)*+{A}="a"; (30,0)*+{G(F(A))}="gfa";%
+(0,-30)*+{A'}="ap"; (30,-30)*+{G(F(A'))}="gfap";
+{\ar "a"; "gfa"}?*!/_3mm/{\eta_{A}};
+{\ar "a"; "ap"}?*!/^3mm/{f};
+{\ar "ap"; "gfap"}?*!/_3mm/{\eta_{A'}};
+{\ar "gfa";"gfap"}?*!/_9mm/{G(F(f))};
+\end{xy}
+\end{equation*}
+
+This amounts to showing $\eta_{A'} \circ f = G(F(f)) \circ \eta_{A}$. On the left, $\eta_{A'} \circ f$ is a map from $A \overset{f}{\rightarrow} A' \overset{\eta_{A'}}{\rightarrow} G(F(A'))$. Considering the right, by above we know that there is a unique $g$ such that $F(f)=\alpha_{A'} \circ g \circ \alpha_{A}^{-1}$ and $G(g)=f$. By functoriality of $G$ that means we can write $G(F(f))=G(\alpha_{A'} \circ g \circ \alpha_{A}^{-1}) = G(\alpha_{A'}) \circ G(g) \circ G(\alpha_{A}^{-1}) = \beta_{B'} \circ f \circ \beta_{B}^{-1}$ where $G(B)=A \overset{\beta_{B}}{\cong} G(F(A))$. So precomposing with $\eta_{A}$ we get a map $G(F(f)) \circ \eta_{A}: A \overset{\eta_{A}}{\rightarrow} G(F(A)) \overset{\beta_{B}^{-1}}{\cong} G(B) = A \overset{f}{\rightarrow} A' = G(B') \overset{\beta_{B'}}{\cong} G(F(A'))$. However, we recognize that $\beta_{B}^{-1}$ is an isomorphism from $G(F(A)) to A$, which is precisely what $\eta_{A}^{-1}$ does, so replacing the $\beta$ isomorphisms with their corresponding $\eta$ isomorphisms, we see that $G(F(f)) \circ \eta_{A} = \eta_{A'} \circ f$.
+
+Similarly, fixing $B,B'\in\mathscr{B}$ and $g:B\to B'$, we need to construct a natural isomorphism $\varepsilon_{B} : F(G(B)) \to B$. Again, showing $\varepsilon_{B}$ is an isomorphism is easy since $G(B)=A$ and $F(A) \overset{\alpha_{A}^{-1}}{\cong} B$, so $F(G(B)) = F(A) \cong B$. Now we need to check naturality, which amounts to showing $g \circ \varepsilon_{B} = \varepsilon_{B'} \circ F(G(g))$. On the one hand, $g \circ \varepsilon_{B}$ is a map from $F(G(B)) \overset{\varepsilon_{B}}{\rightarrow} B \overset{g}{\rightarrow} B'$. On the other hand, $G(g)=f$ for some unique $f:A \to A'$ where $G(B) = A$, so $F(G(g)) = F(f) = \alpha_{A'} \circ g \circ \alpha_{A}^{-1}$. So $\varepsilon_{B'} \circ F(G(g)) = \varepsilon_{B'} \circ \alpha_{A'} \circ g \circ \alpha_{A}^{-1}$ Now, $\alpha_{A}$ is an isomorphism from $B$ to $F(A)$, but $F(A) = F(G(B))$, so $\alpha_{A}$ is an isomorphism from $B$ to $F(G(B))$, which is precisely what $\varepsilon_{B}^{-1}$ is, so again, replacing the $\alpha$ isomorphisms with their corresponding $\varepsilon$ isomorphisms, we have $\varepsilon_{B'} \circ F(G(g)) = g \circ \varepsilon_{B}$.
+
+So $F$ is an equivalence between $\mathscr{A}$ and $\mathscr{B}$.
+
+\end{proof}
+
+With this alternative characterization of equivalence of categories, we can prove some other useful things. The first of which is seeing a precise example of this idea that categories with different numbers of objects in the corresponding isomorphism classes behave in the same way:
+
+\begin{defn}[Skeleton Category]
+Let $\mathscr{A}$ be some category. The skeleton category of $\mathscr{A}$ which we denote $sk\mathscr{A}$ is the full subcategory of $\mathscr{A}$ which has just one object in each isomorphism class of $\mathscr{A}$.
+\end{defn}
+
+\begin{prop}
+The inclusion $sk\mathscr{A}\overset{\iota}{\xhookrightarrow{}}\mathscr{A}$ defines an equivalence of categories.
+\end{prop}
+
+\begin{proof}
+Fix $A,A'\in sk\mathscr{A}$ and $f,g\in sk\mathscr{A}(A,A')$ such that $\iota(f)=\iota(g)$. Then since $\iota(f)=1_{\mathscr{A}}(f)=1_{\mathscr{A}}(g)=\iota(g)$ and $1_{\mathscr{A}}$ is faithful, $f=g$, so $\iota$ is faithful. Let $h\in\mathscr{A}(\iota(A),\iota(A'))=\mathscr{A}(A,A')$. To show fullness, need to show there is a $k\in sk\mathscr{A}(A,A')$ such that $\iota(k)=h$. Since by definition $sk\mathscr{A}$ is a full subcategory of $\mathscr{A}$, it contains all morphisms from $A$ to $A'$, in particular, it has $h$ itself, and certainly $\iota(h)=h$. So $\iota$ is full. Finally let $C\in\mathscr{A}$. Need to find a $D \in sk\mathscr{A}$ such that $\iota(D)\cong C$. Again, since by definition $sk\mathscr{A}$ contains an object in every isomorphism class of $\mathscr{A}$, it certainly contains an object $D$ in the isomorphism class of $C$, so $\iota(D)=1_{\mathscr{A}}(D)\cong C$. So $\iota$ is full, faithful and essentially surjective on objects and hence defines an equivalence between $sk\mathscr{A}$ and $\mathscr{A}$.
+\end{proof}
+
+\begin{prop}
+\label{prop: eqrel}
+Equivalence of categories is an equivalence relation.
+\end{prop}
+
+To prove this we first prove the following lemma.
+
+\begin{lem}
+The composition of functors that are full, faithful and essentially surjective on objects, is also full, faithful and essentially surjective on objects.
+\end{lem}
+
+\begin{proof}
+Let $F:\mathscr{A}\to\mathscr{B}$, $G:\mathscr{B}\to\mathscr{C}$ be functors that are full, faithful and essentially surjective on objects. We want to prove that $GF:\mathscr{A}\to\mathscr{C}$ is full, faithful and essentially surjective on objects.
+
+\emph{Essentially Surjective on Objects:}
+
+Let $C\in\mathscr{C}$. Since $G$ is essentially surjective on objects, there is a $B\in\mathscr{B}$ such that $G(B) \cong C$. Again, since $F$ is essentially surjective on objects, there is an $A\in\mathscr{A}$ such that $F(A) \cong B$. Since functors preserve isomorphisms, we have $G(F(A)) \cong G(B) \cong C$.
+
+\emph{Faithfulness:}
+
+Fix $A,A'\in\mathscr{A}$. We need to show that for all $f,g \in \mathscr{A}(A,A')$ such that $G(F(f))=G(F(g))$ implies $f=g$. Since $G$ is faithful and $G(F(f))=G(F(g))$, that means $F(f)=F(g)$. Again, since $F$ is faithful and $F(f)=F(g)$, that means $f=g$.
+
+\emph{Fullness:}
+
+Let $h \in \mathscr{C}(G(F(A)), G(F(A')))$. Need to show that there is a map $k \in \mathscr{A}(A,A')$ such that $G(F(k)) = h$. Since $G$ is full, there is a map $s \in \mathscr{B}(F(A), F(A'))$ such that $G(s)=h$. Again, since $F$ is full, there is a map $t \in \mathscr{A}(A, A')$ such that $F(t)=s$, so $G(F(t))=G(s)=h$. So $k$ is this $t$.
+
+So the composition preserves fullness, faithfulness and essential surjectivity on objects.
+\end{proof}
+
+Now we are in a position to prove Proposition \ref{prop: eqrel}:
+
+\begin{proof}[Proof of Proposition \ref{prop: eqrel}]
+An equivalence relation is a relation that is reflexive, symmetric and transitive. Symmetricity is easy since if $\mathscr{A}\simeq\mathscr{B}$ we can just interchange $\mathscr{A},\mathscr{B},F$ and $G$ in the definition of equivalence to get $\mathscr{B}\simeq\mathscr{A}$. Reflexivity is also easy since we proved above that the identity functor $1_{\mathscr{A}}:\mathscr{A}\to\mathscr{A}$ is full, faithful and essentially surjective on objects. Finally suppose $\mathscr{A}\overset{F}{\simeq}\mathscr{B}$ and $\mathscr{B}\overset{G}{\simeq}\mathscr{C}$, then $GF$ is a functor from $\mathscr{A}$ to $\mathscr{C}$ and since $F$ and $G$ are full, faithful and essentially surjective on objects, by the lemma proved above, $GF$ is full, faithful and essentially surjective on objects, so $\mathscr{A}\simeq\mathscr{C}$.
+\end{proof}
+
+\end{document}
