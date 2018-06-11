@@ -79,4 +79,8 @@ It is easy enough to show $G' \subseteq \text{Ker}\phi$
 since $\phi(x^{-1}y^{-1}xy)=\phi(x^{-1})\phi(y^{-1})\phi(x)\phi(y)=\phi(x)^{-1}\phi(y)^{-1}\phi(x)\phi(y)$ and since $A$ is abelian, this equals $1_{A}$. We define $\overline{\phi} : G/G' \to A$ by $\overline{\phi}(xG')=\phi(x)$. Now we need to show $\overline{\phi}$ exists and is unique and commutes according to the diagram above. To show that it exists, we show that it is a well defined group homomorphism. Suppose $xG'=yG'$, for $\overline{\phi}$ to be well defined, we need $\overline{\phi}(xG')=\overline{\phi}(yG')$. Since $xG'=yG'$, $xy^{-1} \in G' \subseteq \text{Ker}\phi$, so $\phi(x)\phi(y)^{-1}=\phi(x)\phi(y^{-1})=\phi(xy^{-1})=1_{A}$, so $\phi(x)=\phi(y)$, which by the definition of $\overline{\phi}$, means $\overline{\phi}(xG')=\overline{\phi}(yG')$. $\overline{\phi}$ is indeed a group homomorphism because $\overline{\phi}(xG'yG')=\overline{\phi}(xyG')=\phi(xy)=\phi(x)\phi(y)=\overline{\phi}(xG')\overline{\phi}(yG')$ and $\overline{\phi}$ is unique because it is completely determined and defined by $\phi$. Finally, $\phi = \overline{\phi} \circ \eta$ because $\overline{\phi}(\eta(x))=\overline{\phi}(xG')=\phi(x)$.
 \end{proof}
 
+\nocite{*}
+\bibliographystyle{alpha}
+\bibliography{refabelianization}
+
 \end{document}
