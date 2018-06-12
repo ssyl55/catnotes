@@ -1,5 +1,6 @@
 \documentclass[11pt]{article}
 
+\usepackage{hyperref}
 \usepackage{mathtools}
 \usepackage{amsthm}
 \usepackage{mathrsfs}
@@ -9,6 +10,9 @@
 
 \theoremstyle{definition}
 \newtheorem*{defn}{Definition}
+
+\theoremstyle{definition}
+\newtheorem*{ex}{Example}
 
 \theoremstyle{plain}
 \newtheorem{theo}{Theorem}
@@ -23,7 +27,52 @@
 
 \author{Stephen Liu}
 \title{Adjoints}
-\date{June 11, 2018}
+\date{June 12, 2018}
 
 \maketitle
+
+We should think about adjunctions as an interesting comparison of two categories that is somewhat more general and of a different nature than an equivalence of categories. Following \cite{leinster_basic_2014}, we'll be looking at three different ways of understanding adjoint functors and showing that they are equivalent.
+
+\subsection*{Hom-Set Definition}
+\begin{defn}[Adjoint Functors]
+Given a pair of functors $F:\mathscr{A}\to\mathscr{B}$ and $G:\mathscr{B}\to\mathscr{A}$, we say $F$ is left adjoint to $G$, and $G$ right adjoint to $F$, written $F \dashv G$ if there is a natural isomorphism $t_{A,B}:\mathscr{B}(F(A),B) \to \mathscr{A}(A,G(B))$ for each $A$ in $\mathscr{A}$ and $B$ in $\mathscr{B}$. An adjunction between $F$ and $G$ is a choice of natural isomorphism $t_{A,B}$.
+\end{defn}
+
+So this means for each $g:F(A) \to B$, we have a map $t_{A,B}(g): A \to G(B)$. We shall call this isomorphism the transpose of $g$ (Leinster denotes this $\overline{g}$) and this process "transposing" $g$. Naturality here means that the transpose of a composition of two maps is equal to the composition of the transpose of the two maps. In symbols, we have the following composition of maps $F(A) \overset{Ff}{\rightarrow} F(A') \overset{g}{\rightarrow} B$ and applying $t$ we get the following commutative triangle:
+
+\begin{equation*}
+\begin{xy}
+(0,0)*+{A}="a"; (30, 0)*+{A'}="ap"; (30, -30)*+{G(B)}="gb";
+{\ar "a";"ap"}?*!/_3mm/{f};
+{\ar "ap";"gb"}?*!/_8mm/{t_{A',B}(g)};
+{\ar "a";"gb"}?*!/^10mm/{t_{A,B}(g \circ F(f))}
+\end{xy}
+\end{equation*}
+
+So $t_{A,B}(g \circ F(f)) = t_{A',B}(g) \circ f$ (here $t_{A,A'}(F(f)) = f$). Also note this diagram is naturality in $A$, we have a similar triangle for naturality in $B$ and probably involving $t^{-1}$.
+
+ We call this understanding of adjoint functors the Hom-Set Definition because the important bit here is this isomorphism between the Hom-Sets of $\mathscr{A}$ and $\mathscr{B}$.
+ 
+There are a whole class of examples of adjoint functors that are the forgetful and free functors between algebraic theories. We'll be looking at one of these:
+ 
+ \begin{ex}[Abelianization of Groups]
+ There is an adjunction
+ 
+ \begin{equation*}
+ \begin{xy}
+ (0,0)*+{\textbf{Ab}}="ab"; (0,-30)*+{\textbf{Grp}}="grp";
+ {\ar@<2.ex> "ab";"grp"}?*!/_3mm/{U}?*!/^3mm/{\dashv};
+ {\ar@<2.ex> "grp";"ab"}?*!/_3mm/{F};
+ \end{xy}
+ \end{equation*}
+ \end{ex}
+ 
+ where $U$ is the forgetful inclusion functor from the category of abelian groups to the category of groups, and $F$ is the free functor from the category of groups to the category of abelian groups. For a group $G$ in $\textbf{Grp}$, $F(G)$ is the abelianization of the group $G$, or $G/G'$ where $G'$ is the commutator subgroup of $G$ (see my writeup at \cite{liu_abelianization_2018} for details). This abelianization gives rise to the universal property that for any group homomorphism $\phi$ out of $G$ to an abelian group $A$, there is a unique $\overline{\phi}: G/G' \to A$ such that $\phi = \overline{\phi} \circ \pi$ where $\pi$ is the canonical quotient map from $G$ to $G/G'$. This universal property is what allows us to specify what $t_{G,A}: \textbf{Ab}(F(G), A) \to \textbf{Grp}(G, U(A))$ should do: $t_{G,A}(\overline{\phi}) = \overline{\phi} \circ \pi = \phi$, and $t^{-1}_{G,A}(\phi) = \overline{\phi}$.
+ 
+ \subsection*{Units and Counits Definition}
+ 
+ \nocite{*}
+ \bibliographystyle{alpha}
+ \bibliography{refadjoints}
+
 \end{document}
