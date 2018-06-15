@@ -40,20 +40,88 @@ We should think about adjunctions as an interesting comparison of two categories
 Given a pair of functors $F:\mathscr{A}\to\mathscr{B}$ and $G:\mathscr{B}\to\mathscr{A}$, we say $F$ is left adjoint to $G$, and $G$ right adjoint to $F$, written $F \dashv G$ if there is a natural isomorphism $t_{A,B}:\mathscr{B}(F(A),B) \to \mathscr{A}(A,G(B))$ for each $A$ in $\mathscr{A}$ and $B$ in $\mathscr{B}$. An adjunction between $F$ and $G$ is a choice of natural isomorphism $t_{A,B}$.
 \end{defn}
 
-So this means for each $g:F(A) \to B$, we have a map $t_{A,B}(g): A \to G(B)$. We shall call this isomorphism the transpose of $g$ (Leinster denotes this $\overline{g}$) and this process "transposing" $g$. Naturality here means that the transpose of a composition of two maps is equal to the composition of the transpose of the two maps. In symbols, we have the following composition of maps $F(A) \overset{Ff}{\rightarrow} F(A') \overset{g}{\rightarrow} B$ and applying $t$ we get the following commutative triangle:
+So this means for each $g:F(A) \to B$, we have a map $t_{A,B}(g): A \to G(B)$. We shall call this isomorphism the transpose of $g$ (Leinster denotes this $\overline{g}$) and this process "transposing" $g$. Similarly, for each $f: A \to G(B)$, we have a map $t^{-1}_{A,B}(f): F(A) \to B$.
+
+\subsubsection*{Naturality}
+Let's take a closer look at what naturality means. In words it would mean that the transpose of a composition of two maps is equal to the composition of the transpose of the two maps. We have four options here: 
+\begin{enumerate}
+\item naturality of $t$ with respect to $A$
+\item naturality of $t^{-1}$ with respect to $F(A)$
+\item naturality of $t^{-1}$ with respect to $B$
+\item and finally naturality of $t$ with respect to $G(B)$.
+\end{enumerate}
+
+Let's first take a look at \emph{naturality of $t$ with respect to $A$}:
+
+We have the following data (left), and applying $t_{A',B}$ on $g \circ Ff$ and on them separately we get the commutative triangle on the right:
 
 \begin{equation*}
 \begin{xy}
-(0,0)*+{A}="a"; (30, 0)*+{A'}="ap"; (30, -30)*+{G(B)}="gb";
-{\ar "a";"ap"}?*!/_3mm/{f};
-{\ar "ap";"gb"}?*!/_8mm/{t_{A',B}(g)};
-{\ar "a";"gb"}?*!/^10mm/{t_{A,B}(g \circ F(f))}
+(0,0)*+{A'}="ap"; (30, 0)*+{F(A')}="fap"; (0, -30)*+{A}="a"; (30, -30)*+{F(A)}="fa"; (30, -60)*+{B}="b";
+(60,0)*+{A'}="apt"; (90, 0)*+{A}="at"; (90, -30)*+{G(B)}="gb";
+{\ar "ap";"a"}?*!/^3mm/{f}; {\ar "fap";"fa"}?*!/_4mm/{Ff}; {\ar "fa";"b"}?*!/_3mm/{g};
+{\ar@{|->} "ap";"fap"}; {\ar@{|->} (3,-15);(24, -15)}; {\ar@{|->} "a";"fa"};
+{\ar "apt";"at"}?*!/_3mm/{f};
+{\ar "at";"gb"}?*!/_8mm/{t_{A,B}(g)};
+{\ar "apt";"gb"}?*!/^10mm/{t_{A',B}(g \circ Ff)}
 \end{xy}
 \end{equation*}
 
-So $t_{A,B}(g \circ F(f)) = t_{A',B}(g) \circ f$ (here $t_{A,A'}(F(f)) = f$). Also note this diagram is naturality in $A$, we have a similar triangle for naturality in $B$ and probably involving $t^{-1}$.
+So $t_{A,B}(g \circ F(f)) = t_{A',B}(g) \circ f$ (here $t_{A,A'}(F(f)) = f$).
 
- We call this understanding of adjoint functors the Hom-Set Definition because the important bit here is this isomorphism between the Hom-Sets of $\mathscr{A}$ and $\mathscr{B}$.
+Similarly for 2, 3, and 4, we have the following data yielding the following commutative triangles:
+
+\emph{naturality of $t^{-1}$ with respect to $F(A)$}:
+
+We begin with the map $Ff : F(A') \to F(A)$, and taking the preimage, we get the following data and corresponding commutative triangle:
+
+\begin{equation*}
+\begin{xy}
+(0,0)*+{A'}="ap"; (30, 0)*+{F(A')}="fap"; (0, -30)*+{A}="a"; (30, -30)*+{F(A)}="fa"; (00, -60)*+{G(B)}="gb";
+(60,0)*+{F(A')}="fapt"; (90, 0)*+{F(A)}="fat"; (90, -30)*+{B}="b";
+{\ar "ap";"a"}?*!/^3mm/{f}; {\ar "fap";"fa"}?*!/_4mm/{Ff}; {\ar "a";"gb"}?*!/_3mm/{g};
+{\ar@{|->} "ap";"fap"}; {\ar@{|->} (3,-15);(24, -15)}; {\ar@{|->} "a";"fa"};
+{\ar "fapt";"fat"}?*!/_3mm/{Ff};
+{\ar "fat";"b"}?*!/_8mm/{t^{-1}_{A,B}(g)};
+{\ar "fapt";"b"}?*!/^10mm/{t^{-1}_{A',B}(g \circ f)}
+\end{xy}
+\end{equation*}
+
+So $t^{-1}_{A',B}(g \circ f) = t^{-1}_{A,B}(g) \circ Ff$.
+
+\emph{naturality of $t^{-1}$ with respect to $B$}:
+
+\begin{equation*}
+\begin{xy}
+(30, 0)*+{A}="a"; (0, -30)*+{B}="b"; (30, -30)*+{G(B)}="gb"; (0, -60)*+{B'}="bp"; (30, -60)*+{G(B')}="gbp";
+(60, 0)*+{F(A)}="fat"; (90, 0)*+{B}="bt"; (90, -30)*+{B'}="bpt";
+{\ar "a";"gb"}?*!/_3mm/{f}; {\ar "gb";"gbp"}?*!/_4mm/{Gg}; {\ar "b";"bp"}?*!/^3mm/{g};
+{\ar@{|->} "b";"gb"}; {\ar@{|->} "bp";"gbp"}; {\ar@{|->} (3, -45);(24, -45)};
+{\ar "fat";"bt"}?*!/_3mm/{t^{-1}_{A,B}(f)};
+{\ar "bt";"bpt"}?*!/_3mm/{g};
+{\ar "fat";"bpt"}?*!/^10mm/{t^{-1}_{A,B'}(Gg \circ f)};
+\end{xy}
+\end{equation*}
+
+So $t^{-1}_{A,B'}(Gg \circ f) = g \circ t^{-1}_{A,B}(f)$.
+
+Finally, \emph{naturality of $t$ with respect to $G(B)$}:
+
+\begin{equation*}
+\begin{xy}
+(0, 0)*+{F(A)}="fa"; (0, -30)*+{B}="b"; (30, -30)*+{G(B)}="gb"; (0, -60)*+{B'}="bp"; (30, -60)*+{G(B')}="gbp";
+(60, 0)*+{A}="at"; (90, 0)*+{G(B)}="gbt"; (90, -30)*+{G(B')}="gbpt";
+{\ar "fa";"b"}?*!/^3mm/{f}; {\ar "gb";"gbp"}?*!/_4mm/{Gg}; {\ar "b";"bp"}?*!/^3mm/{g};
+{\ar@{|->} "b";"gb"}; {\ar@{|->} "bp";"gbp"}; {\ar@{|->} (3, -45);(24, -45)};
+{\ar "at";"gbt"}?*!/_3mm/{t_{A,B}(f)};
+{\ar "gbt";"gbpt"}?*!/_4mm/{Gg};
+{\ar "at";"gbpt"}?*!/^10mm/{t_{A,B'}(g \circ f)};
+\end{xy}
+\end{equation*}
+
+So $t_{A,B'}(g \circ f) = Gg \circ t_{A,B}(f)$.
+
+We call this understanding of adjoint functors the Hom-Set Definition because the important bit here is this isomorphism between the Hom-Sets of $\mathscr{A}$ and $\mathscr{B}$.
  
 There are a whole class of examples of adjoint functors that are the forgetful and free functors between algebraic theories. We'll be looking at one of these:
  
@@ -62,7 +130,7 @@ There are a whole class of examples of adjoint functors that are the forgetful a
  
  \begin{equation*}
  \begin{xy}
- (0,0)*+{\textbf{Ab}}="ab"; (0,-30)*+{\textbf{Grp}}="grp";
+ (0,0)*+{\textbf{Ab}}="ab"; (0,-25)*+{\textbf{Grp}}="grp";
  {\ar@<2.ex> "ab";"grp"}?*!/_3mm/{U}?*!/^3mm/{\dashv};
  {\ar@<2.ex> "grp";"ab"}?*!/_3mm/{F};
  \end{xy}
@@ -72,6 +140,67 @@ There are a whole class of examples of adjoint functors that are the forgetful a
  where $U$ is the forgetful inclusion functor from the category of abelian groups to the category of groups, and $F$ is the free functor from the category of groups to the category of abelian groups. For a group $G$ in $\textbf{Grp}$, $F(G)$ is the abelianization of the group $G$, or $G/G'$ where $G'$ is the commutator subgroup of $G$ (see my writeup at \cite{liu_abelianization_2018} for details). This abelianization gives rise to the universal property that for any group homomorphism $\phi$ out of $G$ to an abelian group $A$, there is a unique $\overline{\phi}: G/G' \to A$ such that $\phi = \overline{\phi} \circ \pi$ where $\pi$ is the canonical quotient map from $G$ to $G/G'$. This universal property is what allows us to specify what $t_{G,A}: \textbf{Ab}(F(G), A) \to \textbf{Grp}(G, U(A))$ should do: $t_{G,A}(\overline{\phi}) = \overline{\phi} \circ \pi = \phi$, and $t^{-1}_{G,A}(\phi) = \overline{\phi}$.
  
  \subsection*{Units and Counits Definition}
+ 
+ \begin{defn}[Unit and Counit of an Adjunction]
+ Given $A \in \mathscr{A}$ and the identity map $1_{F(A)}$ in $\mathscr{B}(F(A),F(A))$, $t_{A,F(A)}(1_{F(A)})$ defines the isomorphism $\eta_{A}: A \to GF(A)$. Similarly, given $B \in \mathscr{B}$ and the identity map $1_{G(B)}$, $t^{-1}_{G(B),B}(1_{G(B)})$ defines the isomorphism $\varepsilon_{B}: FG(B) \to B$. Together, $\eta_{A}$ and $\varepsilon_{B}$ define the natural transformations
+ \begin{equation*}
+ \eta: 1_{\mathscr{A}} \to G \circ F, \qquad \varepsilon: F \circ G \to 1_{\mathscr{B}}
+ \end{equation*}
+ called the unit and counit of the adjunction, respectively.
+ \end{defn}
+ 
+We have important triangle identities associated with the unit and counit.
+
+\begin{prop}[Triangle Identities]
+Given an adjunction $F \dashv G$ with unit $\eta$ and counit $\varepsilon$, the triangles
+
+\begin{equation*}
+\begin{xy}
+(0,0)*+{F}="f1"; (30,0)*+{FGF}="fgf"; (30,-30)*+{F}="f2";
+(60,0)*+{G}="g1"; (90,0)*+{GFG}="gfg"; (90, -30)*+{G}="g2";
+{\ar "f1";"fgf"}?*!/_3mm/{F\eta}; {\ar "fgf";"f2"}?*!/_4mm/{\varepsilon F}; {\ar "f1";"f2"}?*!/^3mm/{1_{F}};
+{\ar "g1";"gfg"}?*!/_3mm/{\eta G}; {\ar "gfg";"g2"}?*!/_4mm/{G \varepsilon}; {\ar "g1";"g2"}?*!/^3mm/{1_{G}};
+\end{xy}
+\end{equation*}
+commute.
+\end{prop}
+
+\begin{proof}
+We prove the equivalent statement that the triangles 
+\begin{equation*}
+\begin{xy}
+(0,0)*+{F(A)}="f1"; (30,0)*+{FGF(A)}="fgf"; (30,-30)*+{F(A)}="f2";
+(60,0)*+{G(B)}="g1"; (90,0)*+{GFG(B)}="gfg"; (90, -30)*+{G(B)}="g2";
+{\ar "f1";"fgf"}?*!/_4mm/{F(\eta_{A})}; {\ar "fgf";"f2"}?*!/_6mm/{\varepsilon_{F(A)}}; {\ar "f1";"f2"}?*!/^5mm/{1_{F(A)}};
+{\ar "g1";"gfg"}?*!/_4mm/{\eta_{G(B)}}; {\ar "gfg";"g2"}?*!/_6mm/{G(\varepsilon_{B})}; {\ar "g1";"g2"}?*!/^5mm/{1_{G(B)}};
+\end{xy}
+\end{equation*}
+
+commute for all $A \in \mathscr{A}$ and $B \in \mathscr{B}$.
+
+For the triangle on the left, we use \emph{naturality of $t^{-1}$ with respect to $F(A)$} that we explained above where we replace $f$ with $\eta_{A}$ and $g$ with $1_{GF(A)}$. So we have the following data giving rise to the commutative triangle on the right:
+
+\begin{equation*}
+\begin{xy}
+(0,0)*+{A}="a"; (30, 0)*+{F(A)}="fa"; (0, -30)*+{GF(A)}="gfa1"; (30, -30)*+{FGF(A)}="fgfa"; (00, -60)*+{GF(A)}="gfa2";
+(60,0)*+{F(A)}="fat1"; (90, 0)*+{FGF(A)}="fgfat"; (90, -30)*+{F(A)}="fat2";
+{\ar "a";"gfa1"}?*!/^3mm/{\eta_{A}}; {\ar "fa";"fgfa"}?*!/_6mm/{F(\eta_{A})}; {\ar "gfa1";"gfa2"}?*!/^6mm/{1_{GF(A)}};
+{\ar@{|->} "a";"fa"}; {\ar@{|->} (3,-15);(24, -15)}; {\ar@{|->} "gfa1";"fgfa"};
+{\ar "fat1";"fgfat"}?*!/_3mm/{F(\eta_{A})};
+{\ar "fgfat";"fat2"}?*!/_18mm/{t^{-1}_{GF(A),F(A)}(1_{GF(A)})};
+{\ar "fat1";"fat2"}?*!/^14mm/{t^{-1}_{A,F(A)}(1_{GF(A)} \circ \eta_{A})}
+\end{xy}
+\end{equation*}
+Now by definition $t^{-1}_{GF(A),F(A)}(1_{GF(A)})=\varepsilon_{F(A)}$, and $t^{-1}_{A,F(A)}(1_{GF(A)} \circ \eta_{A})=t^{-1}_{A,F(A)}(\eta_{A})$ and by definition, $t_{A,F(A)}(1_{F(A)}) = \eta_{A}$, so $t^{-1}_{A,F(A)}(\eta_{A})=1_{F(A)}$. So from the triangle we get $1_{F(A)} = \varepsilon_{F(A)} \circ F(\eta_{A})$, proving the commutative triangle.
+
+Similarly, for the triangle on the right, we use \emph{naturality of $t$ with respect to $G(B)$} that we explained above where we replace $f$ with $1_{FG(B)}$ and $g$ with $\varepsilon_{B}$. So we from the resulting commutative triangle we have
+\begin{equation*}
+t_{G(B),B}(\varepsilon_{B} \circ 1_{FG(B)}) = G(\varepsilon_{B}) \circ t_{G(B),FG(B)}(1_{FG(B)}).
+\end{equation*}
+
+And again, by definition $t_{G(B),FG(B)}(1_{FG(B)})=\eta_{G(B)}$ and $t_{G(B),B}(\varepsilon_{B} \circ 1_{FG(B)})=t_{G(B),B}(\varepsilon_{B})=1_{G(B)}$, so $1_{G(B)}=G\varepsilon_{B} \circ \eta_{G(B)}$, proving the identity.
+
+\end{proof}
  
  \nocite{*}
  \bibliographystyle{alpha}
