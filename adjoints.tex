@@ -43,7 +43,7 @@ Given a pair of functors $F:\mathscr{A}\to\mathscr{B}$ and $G:\mathscr{B}\to\mat
 So this means for each $g:F(A) \to B$, we have a map $t_{A,B}(g): A \to G(B)$. We shall call this isomorphism the transpose of $g$ (Leinster denotes this $\overline{g}$) and this process "transposing" $g$. Similarly, for each $f: A \to G(B)$, we have a map $t^{-1}_{A,B}(f): F(A) \to B$.
 
 \subsubsection*{Naturality}
-Let's take a closer look at what naturality means. In words it would mean that the transpose of a composition of two maps is equal to the composition of the transpose of the two maps. We have four options here: 
+Let's take a closer look at what naturality means. In words it would mean that the transpose of a composition of two maps is equal to the composition of the transpose of the two maps. We have four options here:
 \begin{enumerate}
 \item naturality of $t$ with respect to $A$
 \item naturality of $t^{-1}$ with respect to $F(A)$
@@ -67,7 +67,7 @@ We have the following data (left), and applying $t_{A',B}$ on $g \circ Ff$ and o
 \end{xy}
 \end{equation*}
 
-So $t_{A,B}(g \circ F(f)) = t_{A',B}(g) \circ f$ (here $t_{A,A'}(F(f)) = f$).
+So $t_{A',B}(g \circ F(f)) = t_{A,B}(g) \circ f$ (here $t_{A',F(A)}(F(f)) = f$).
 
 Similarly for 2, 3, and 4, we have the following data yielding the following commutative triangles:
 
@@ -122,12 +122,12 @@ Finally, \emph{naturality of $t$ with respect to $G(B)$}:
 So $t_{A,B'}(g \circ f) = Gg \circ t_{A,B}(f)$.
 
 We call this understanding of adjoint functors the Hom-Set Definition because the important bit here is this isomorphism between the Hom-Sets of $\mathscr{A}$ and $\mathscr{B}$.
- 
+
 There are a whole class of examples of adjoint functors that are the forgetful and free functors between algebraic theories. We'll be looking at one of these:
- 
+
  \begin{ex}[Abelianization of Groups]
  There is an adjunction
- 
+
  \begin{equation*}
  \begin{xy}
  (0,0)*+{\textbf{Ab}}="ab"; (0,-25)*+{\textbf{Grp}}="grp";
@@ -136,19 +136,19 @@ There are a whole class of examples of adjoint functors that are the forgetful a
  \end{xy}
  \end{equation*}
  \end{ex}
- 
+
  where $U$ is the forgetful inclusion functor from the category of abelian groups to the category of groups, and $F$ is the free functor from the category of groups to the category of abelian groups. For a group $G$ in $\textbf{Grp}$, $F(G)$ is the abelianization of the group $G$, or $G/G'$ where $G'$ is the commutator subgroup of $G$ (see my writeup at \cite{liu_abelianization_2018} for details). This abelianization gives rise to the universal property that for any group homomorphism $\phi$ out of $G$ to an abelian group $A$, there is a unique $\overline{\phi}: G/G' \to A$ such that $\phi = \overline{\phi} \circ \pi$ where $\pi$ is the canonical quotient map from $G$ to $G/G'$. This universal property is what allows us to specify what $t_{G,A}: \textbf{Ab}(F(G), A) \to \textbf{Grp}(G, U(A))$ should do: $t_{G,A}(\overline{\phi}) = \overline{\phi} \circ \pi = \phi$, and $t^{-1}_{G,A}(\phi) = \overline{\phi}$.
- 
+
  \subsection*{Units and Counits Definition}
- 
+
  \begin{defn}[Unit and Counit of an Adjunction]
- Given $A \in \mathscr{A}$ and the identity map $1_{F(A)}$ in $\mathscr{B}(F(A),F(A))$, $t_{A,F(A)}(1_{F(A)})$ defines the isomorphism $\eta_{A}: A \to GF(A)$. Similarly, given $B \in \mathscr{B}$ and the identity map $1_{G(B)}$, $t^{-1}_{G(B),B}(1_{G(B)})$ defines the isomorphism $\varepsilon_{B}: FG(B) \to B$. Together, $\eta_{A}$ and $\varepsilon_{B}$ define the natural transformations
+ Given $A \in \mathscr{A}$ and the identity map $1_{F(A)}$, $t_{A,F(A)}(1_{F(A)})$ defines the isomorphism $\eta_{A}: A \to GF(A)$. Similarly, given $B \in \mathscr{B}$ and the identity map $1_{G(B)}$, $t^{-1}_{G(B),B}(1_{G(B)})$ defines the isomorphism $\varepsilon_{B}: FG(B) \to B$. Together, $\eta_{A}$ and $\varepsilon_{B}$ define the natural transformations
  \begin{equation*}
  \eta: 1_{\mathscr{A}} \to G \circ F, \qquad \varepsilon: F \circ G \to 1_{\mathscr{B}}
  \end{equation*}
  called the unit and counit of the adjunction, respectively.
  \end{defn}
- 
+
 We have important triangle identities associated with the unit and counit.
 
 \begin{prop}[Triangle Identities]
@@ -166,7 +166,7 @@ commute.
 \end{prop}
 
 \begin{proof}
-We prove the equivalent statement that the triangles 
+We prove the equivalent statement that the triangles
 \begin{equation*}
 \begin{xy}
 (0,0)*+{F(A)}="f1"; (30,0)*+{FGF(A)}="fgf"; (30,-30)*+{F(A)}="f2";
@@ -201,7 +201,35 @@ t_{G(B),B}(\varepsilon_{B} \circ 1_{FG(B)}) = G(\varepsilon_{B}) \circ t_{G(B),F
 And again, by definition $t_{G(B),FG(B)}(1_{FG(B)})=\eta_{G(B)}$ and $t_{G(B),B}(\varepsilon_{B} \circ 1_{FG(B)})=t_{G(B),B}(\varepsilon_{B})=1_{G(B)}$, so $1_{G(B)}=G\varepsilon_{B} \circ \eta_{G(B)}$, proving the identity.
 
 \end{proof}
- 
+
+It turns out the unit and counit determine the whole adjunction.
+
+\begin{prop}
+Given an adjunction $t_{A,B}:\mathscr{B}(F(A),B) \to \mathscr{A}(A,G(B))$ for any $g:F(A) \to B$, $t_{A,B}(g)=Gg \circ \eta_{A}$, and for any $f:A \to G(B)$, $t^{-1}_{A,B}(f)=\varepsilon_{B} \circ Ff$.
+\end{prop}
+
+\begin{proof}
+For any $g:F(A) \to B$, by naturality, $t_{A,B}(g)=t_{A,B}(g \circ 1_{F(A)})$ which by naturality of $t$ with respect to $GF(A)$, is equal to $Gg \circ \eta_{A}$. Similarly, for any $f:A \to G(B)$, $t^{-1}_{A,B}(f) = t^{-1}_{A,B}(1_{G(B)} \circ f)$ which by naturality of $t^{-1}$ with respect to $FG(B)$, is equal to $\varepsilon_{B} \circ Ff$.
+\end{proof}
+
+Using this fact, we can equivalently define adjunctions by specifying pairs of units and counits.
+
+\begin{theo}
+Given functors $F:\mathscr{A} \to \mathscr{B}$, $G: \mathscr{B} \to \mathscr{A}$, there is a bijection between adjunctions $F \dashv G$ and pairs of units and counits $(\eta, \varepsilon)$ that satisfy the triangle identities.
+\end{theo}
+
+\begin{proof}
+We have already shown that given an adjunction $t$, we can define natural transformations $\eta, \varepsilon$ that satisfy the triangle identites. Now, we just need to show that given unit and counit $\eta, \varepsilon$, we can uniquely define a natural isomorphism $t_{A,B}:\mathscr{B}(F(A),B) \to \mathscr{A}(A,G(B))$ for all $A \in \mathscr{A}$, for all $B \in \mathscr{B}$.
+
+Given $g:F(A) \to B$, define $t_{A,B}(g)=Gg \circ \eta_{A}$, and given $f: A \to G(B)$, define $t^{-1}_{A,B}(f)=\varepsilon_{B} \circ Ff$. We need to show that $t$ and $t^{-1}$ are well-defined, mutually inverse, natural, and that $\eta, \varepsilon$ are in fact their unit and counit.
+
+\emph{Well-Defined}
+Let $g:F(A) \to B$, $h: F(A) \to B$ with $g = h$. Since $G$ is well-defined, $t_{A,B}(g)=Gg \circ \eta_{A} = Gh \circ \eta_{A} = t_{A,B}(h)$, so $t$ is well-defined. Similarly for $t^{-1}$.
+
+\emph{Isomorphism}
+
+\end{proof}
+
  \nocite{*}
  \bibliographystyle{alpha}
  \bibliography{refadjoints}
