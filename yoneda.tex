@@ -1,0 +1,72 @@
+\documentclass[11pt]{article}
+
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage[arrow]{xy}
+
+\pagestyle{headings}
+
+\theoremstyle{definition}
+\newtheorem*{defn}{Definition}
+
+\theoremstyle{definition}
+\newtheorem{ex}{Example}
+
+\theoremstyle{plain}
+\newtheorem{theo}{Theorem}
+
+\theoremstyle{plain}
+\newtheorem{prop}{Proposition}
+
+\theoremstyle{plain}
+\newtheorem*{lem}{Lemma}
+
+\begin{document}
+
+\author{Stephen Liu}
+\title{The Yoneda Lemma}
+\date{June 18, 2018}
+
+\maketitle
+
+\begin{abstract}
+Some notes on the Yoneda Lemma, starting with the notion of representable functors.
+\end{abstract}
+
+We first define a \emph{prototype} of a representable functor out of a locally small category $\mathscr{A}$.
+
+\begin{defn}
+Let $\mathscr{A}$ be a locally small category, and fix $A \in \mathscr{A}$. Define the functor $H^{A}=\mathscr{A}(A, -): \mathscr{A} \to \textbf{Set}$ by the following mapping on
+
+\begin{enumerate}
+\item \textbf{objects}: For $B \in \mathscr{A}$, define $H^{A}(B) = \mathscr{A}(A,B)$, the hom-set of arrows in $\mathscr{A}$ from $A$ to $B$.
+\item \textbf{morphisms}: For $g:B \to B'$, define $H^{A}(g) = \mathscr{A}(A, g): \mathscr{A}(A,B) \to \mathscr{A}(A,B')$ by $p \mapsto g \circ p$ for all $p : A \to B$, sending morphisms from $A$ to $B$ to morphisms from $A$ to $B'$ by post-composition with $g$.
+\end{enumerate}
+\end{defn}
+
+This is the covariant version of $H$, there is a contravariant version, denoted $H_{A}$ which does pre-composition instead.
+
+From this prototype of a representable functor, we can now define representable functors:
+
+\begin{defn}[Representable Functor]
+Let $\mathscr{A}$ be a locally small category. A functor $X:\mathscr{A} \to \textbf{Set}$ is representable if $X$ is naturally isomorphic to $H^{A}$ for some $A \in \mathscr{A}$. A representation of $X$ is a choice of an object $A$ along with a natural isomorphism from $H^{A}$ to $X$.
+\end{defn}
+
+Some examples of representable functors:
+
+\begin{ex}[group $G$ regarded as a one object category]
+\end{ex}
+
+\begin{ex}[$H^{1}:\textbf{Set} \to \textbf{Set}$]
+\end{ex}
+
+\begin{ex}[$H^{\textbf{1}}:\textbf{Cat} \to \textbf{Set}$]
+\end{ex}
+
+\nocite{*}
+\bibliographystyle{alpha}
+\bibliography{refyoneda}
+
+\end{document}
