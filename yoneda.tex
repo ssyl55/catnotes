@@ -21,7 +21,7 @@
 \newtheorem{prop}{Proposition}
 
 \theoremstyle{plain}
-\newtheorem*{lem}{Lemma}
+\newtheorem{lem}{Lemma}
 
 \begin{document}
 
@@ -34,6 +34,8 @@
 \begin{abstract}
 Some notes on the Yoneda Lemma, starting with the notion of representable functors.
 \end{abstract}
+
+\subsection*{Representable Functors}
 
 We first define a \emph{prototype} of a representable functor out of a locally small category $\mathscr{A}$.
 
@@ -67,6 +69,7 @@ Since $\mathscr{G}$ has only one object, there is only one representable functor
 \end{ex}
 
 \begin{ex}[$H^{1}:\textbf{Set} \to \textbf{Set}$]
+\label{ex-set}
 Let $1$ denote the set with just one element. The functor $1_{\textbf{Set}}$ is represented by the functor $H^{1}:\textbf{Set} \to \textbf{Set}$. To see this, let us first see what $H^{1}$ does and then show that it is naturally isomorphic to $1_{\textbf{Set}}$.
 
 Let $B \in \textbf{Set}$, then $H^{1}(B) = \textbf{Set}(1, B) = \{  b:1 \to B \}$ the set of functions from the singleton set to $B$ that pick out an element of $B$. In particular, $H^{1}(B) \cong B$. Let $p: 1 \to B$ and $g: B \to B'$, then $H^{1}(g) = \textbf{Set}(1, g): \textbf{Set}(1, B) \to \textbf{Set}(1, B')$ sends functions $p$ that pick out an element of $B$ to functions $g \circ p$ that pick out an element of $B'$.
@@ -91,6 +94,42 @@ Hence $1_{\textbf{Set}}$ is represented by $H^{1}$.
 \begin{ex}[$H^{\textbf{1}}:\textbf{Cat} \to \textbf{Set}$]
 Similarly to the example above, $\text{ob}:\textbf{Cat} \to \textbf{Set}$ which sends a small category to its underlying set of objects is represented by $H^{\textbf{1}}$ where $\textbf{1}$ is the one-object category. This is because when $\mathscr{B}$ is a category, $H^{\textbf{1}}(\mathscr{B}) = \textbf{Cat}(\textbf{1}, \mathscr{B})$ which picks out objects of $\mathscr{B}$ and is isomorphic to $\text{ob}\mathscr{B}$. The proof that these functors are naturally isomorphic is essentially the same as the one for $1_{\textbf{Set}}$ and $H^{1}$ in the example above.
 \end{ex}
+
+\subsection*{Adjoints and Representables}
+
+Now we establish the claim that any set valued functor with a left adjoint is representable. We first prove the following lemma.
+
+\begin{lem}
+Let $\mathscr{A}, \mathscr{B}$ be locally small categories with functors $F:\mathscr{A} \to \mathscr{B}, G:\mathscr{B} \to \mathscr{A}$ such that $F \dashv G$. Fix $A \in \mathscr{A}$, then the functor \begin{equation*} \mathscr{A}(A, G(-)): \mathscr{B} \to \textbf{Set} \end{equation*} that is, the composition $\mathscr{B} \overset{G}{\to} \mathscr{A} \overset{H^{A}}{\to} \textbf{Set}$ is representable.
+\end{lem}
+
+\begin{proof}
+Because $F \dashv G$, we have the isomorphism $t^{-1}_{A,B}: \mathscr{A}(A, G(B)) \to \mathscr{B}(F(A), B)$ for each $B \in \mathscr{B}$. Now $H^{F(A)}$ maps $B$ to $\mathscr{B}(F(A),B)$, and it maps a morphism $g: B \to B'$ to $\mathscr{B}(F(A),g):\mathscr{B}(F(A),B) \to \mathscr{B}(F(A),B')$. So we suspect that the isomorphisms $t^{-1}_{A,B}$ gives rise to the natural isomorphism $t^{-1}:\mathscr{A}(A,G(-)) \Rightarrow H^{F(A)}$. We show that this is in fact the case.
+
+We need to check naturality. Let $g:B \to B'$. We need to check that the following naturality square commutes:
+
+\begin{equation*}
+\begin{xy}
+(0,0)*+{\mathscr{A}(A, G(B))}="v1"; (60,0)*+{\mathscr{A}(A, G(B'))}="v2"; (0,-30)*+{\mathscr{B}(F(A), B)}="v3"; (60,-30)*+{\mathscr{B}(F(A), B')}="v4";
+{\ar "v1";"v2"}?*!/_5mm/{\mathscr{A}(A, Gg)=H^{A}(Gg)};
+{\ar "v1";"v3"}?*!/^5mm/{t^{-1}_{A,B}};
+{\ar "v2";"v4"}?*!/_5mm/{t^{-1}_{A,B'}};
+{\ar "v3";"v4"}?*!/^5mm/{H^{F(A)}(g)};
+\end{xy}
+\end{equation*}
+
+It suffices to consider a map $f: A \to G(B)$ from $\mathscr{A}(A,G(B))$ as it travels around the diagram. Going down from $\mathscr{A}(A,G(B))$, $t^{-1}_{A,B}(f:A \to G(B))$ is a map $t^{-1}_{A,B}(f):F(A) \to B$, and then $H^{F(A)}(g)(t^{-1}_{A,B}) = g \circ t^{-1}_{A,B}$ which is a map from $F(A)$ to $B'$. On the other hand, going right from $\mathscr{A}(A,G(B))$, $H^{A}(Gg)(f:A \to G(B)) = Gg \circ f$ which is a map from $A$ to $G(B')$ and then $t^{-1}_{A,B'}(Gg \circ f)$ is a map from $F(A)$ to $B'$. So the question is whether $t^{-1}_{A,B'}(Gg \circ f) = g \circ t^{-1}_{A,B}(f)$, but that is precisely what it means for $t^{-1}$ to be natural with respect to $B$ (See \cite{liu_adjoints_2018}), so in fact $\mathscr{A}(A,G(-)) \cong H^{F(A)}$ and is therefore representable.
+\end{proof}
+
+Now we are ready to prove the main claim of this subsection:
+
+\begin{theo}
+Any set-valued functor that has a left adjoint is representable.
+\end{theo}
+
+\begin{proof}
+Let $G:\mathscr{A}\to\textbf{Set}$ be a functor with left adjoint $F$. Let $1$ denote the set with a single element. For all $A \in \mathscr{A}$, $G(A)$ is a set and by example \ref{ex-set} above, $H^{1}(G(A)) = \textbf{Set}(1, G(A)) \cong G(A)$ naturally in $A$ where $H^{1}$ is our functor from $\textbf{Set}$ to $\textbf{Set}$ in example \ref{ex-set} above. So $G \cong \textbf{Set}(1, G(-))$ and by the lemma above, this means $G$ is representable.
+\end{proof}
 
 \nocite{*}
 \bibliographystyle{alpha}
