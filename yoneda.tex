@@ -57,12 +57,39 @@ Let $\mathscr{A}$ be a locally small category. A functor $X:\mathscr{A} \to \tex
 Some examples of representable functors:
 
 \begin{ex}[group $G$ regarded as a one object category]
+Regarding a group $G$ as a one object category $\mathscr{G}$, with object $\ast$, $H^{\ast}=\ast(\ast, -): \mathscr{G} \to \textbf{Set}$ is a functor which maps
+\begin{enumerate}
+\item \textbf{objects}: There is only one object in $\mathscr{G}$, and $H^{\ast}(\ast)$ is the set of mappings from $\ast$ to $\ast$, otherwise known as the elements of the group $G$. So $H^{\ast}(\ast) \cong U(G)$ where $U:\textbf{Grp} \to \textbf{Set}$ is the forgetful functor that returns the underlying set of a group.
+\item \textbf{morphisms}: Let $g \in G$, then $H^{\ast}(g)$ maps any element $h$ of $G$ to $g \circ h$, which, interpreted in the context of a group is just group mulitiplication on the left, i.e. $gh$.
+\end{enumerate}
+
+Since $\mathscr{G}$ has only one object, there is only one representable functor on it (up to isomorphism), and the representable is the underlying set $G$ acted on by left multiplication.
 \end{ex}
 
 \begin{ex}[$H^{1}:\textbf{Set} \to \textbf{Set}$]
+Let $1$ denote the set with just one element. The functor $1_{\textbf{Set}}$ is represented by the functor $H^{1}:\textbf{Set} \to \textbf{Set}$. To see this, let us first see what $H^{1}$ does and then show that it is naturally isomorphic to $1_{\textbf{Set}}$.
+
+Let $B \in \textbf{Set}$, then $H^{1}(B) = \textbf{Set}(1, B) = \{  b:1 \to B \}$ the set of functions from the singleton set to $B$ that pick out an element of $B$. In particular, $H^{1}(B) \cong B$. Let $p: 1 \to B$ and $g: B \to B'$, then $H^{1}(g) = \textbf{Set}(1, g): \textbf{Set}(1, B) \to \textbf{Set}(1, B')$ sends functions $p$ that pick out an element of $B$ to functions $g \circ p$ that pick out an element of $B'$.
+
+So we have the parallel functors $H^{1}, 1_{\textbf{Set}}: \textbf{Set} \to \textbf{Set}$ and we know what they do. Now we construct a natural isomorphism $t: H^{1} \Rightarrow 1_{\textbf{Set}}$. We already have that $H^{1}(B) \cong B$, so the components of $t$ are the isomorphisms $t_{B}: H^{1}(B) \to B$ (and of course $t^{-1}_{B}: B \to H^{1}(B))$. Now we need to check that the naturality square below commutes:
+
+\begin{equation*}
+\begin{xy}
+(0, 0)*+{H^{1}(B)}="h1b"; (30, 0)*+{H^{1}(B')}="h1bp"; (0, -30)*+{B}="b"; (30, -30)*+{B'}="bp";
+{\ar "h1b";"h1bp"}?*!/_3mm/{H^{1}(g)}; {\ar "b";"bp"}?*!/^3mm/{1_{\textbf{Set}}(g)=g};
+{\ar "h1b";"b"}?*!/^3mm/{t_{B}}; {\ar "h1bp";"bp"}?*!/_3mm/{t_{B'}};
+\end{xy}
+\end{equation*}
+
+where $g: B \to B'$.
+
+It is enough to consider an element $b: 1 \to B$ from $H^{1}(B)$. $b$ picks out an element of $B$, which we will also identify by $b(1) = b$. Going down from $H^{1}(B)$, $t_{B}(b: 1 \to B)$ gives us this element $b$, which is then sent by $g$ to some element of $B'$, say $b'$. On the other hand, going right from $H^{1}(B)$, $H^{1}(g)(b: 1 \to B) = g \circ b$ which gives us the map $b': 1 \to B'$ that picks out $g(b(1)) = b'$. Finally, $t_{B'}(b')$ is precisely this element $b'$ of $B'$. So in fact the naturality square commutes.
+
+Hence $1_{\textbf{Set}}$ is represented by $H^{1}$.
 \end{ex}
 
 \begin{ex}[$H^{\textbf{1}}:\textbf{Cat} \to \textbf{Set}$]
+Similarly to the example above, $\text{ob}:\textbf{Cat} \to \textbf{Set}$ which sends a small category to its underlying set of objects is represented by $H^{\textbf{1}}$ where $\textbf{1}$ is the one-object category. This is because when $\mathscr{B}$ is a category, $H^{\textbf{1}}(\mathscr{B}) = \textbf{Cat}(\textbf{1}, \mathscr{B})$ which picks out objects of $\mathscr{B}$ and is isomorphic to $\text{ob}\mathscr{B}$. The proof that these functors are naturally isomorphic is essentially the same as the one for $1_{\textbf{Set}}$ and $H^{1}$ in the example above.
 \end{ex}
 
 \nocite{*}
