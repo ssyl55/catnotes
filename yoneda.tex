@@ -131,6 +131,30 @@ Any set-valued functor that has a left adjoint is representable.
 Let $G:\mathscr{A}\to\textbf{Set}$ be a functor with left adjoint $F$. Let $1$ denote the set with a single element. For all $A \in \mathscr{A}$, $G(A)$ is a set and by example \ref{ex-set} above, $H^{1}(G(A)) = \textbf{Set}(1, G(A)) \cong G(A)$ naturally in $A$ where $H^{1}$ is our functor from $\textbf{Set}$ to $\textbf{Set}$ in example \ref{ex-set} above. So $G \cong \textbf{Set}(1, G(-))$ and by the lemma above, this means $G$ is representable.
 \end{proof}
 
+\subsection*{Maps Between Representable Functors}
+
+\begin{prop}
+Let $f:A' \to A$, then $f$ induces a natural transformation $H^{f}: H^{A} \Rightarrow H^{A'}$ with components $H^{f}_{B}:H^{A}(B) \to H^{A'}(B)$ so that a map $p:A \to B$ in $H^{A}(B)$ gets mapped via precomposition with $f$ to $p \circ f: A' \to B$.
+\end{prop}
+
+\begin{proof}
+We need to show that this map $H^{f}$ is indeed a natural transformation. Let $g:B\to B'$. This means checking that the naturality square:
+
+\begin{equation*}
+\begin{xy}
+(0,0)*+{H^{A}(B)}="v1";(30,0)*+{H^{A}(B')}="v2";(0,-30)*+{H^{A'}(B)}="v3";(30,-30)*+{H^{A'}(B')}="v4";
+{\ar "v1";"v2"}?*!/_4mm/{H^{A}(g)};
+{\ar "v1";"v3"}?*!/^4mm/{H^{f}_{B}};
+{\ar "v2";"v4"}?*!/_4mm/{H^{f}_{B'}};
+{\ar "v3";"v4"}?*!/^4mm/{H^{A'}(g)};
+\end{xy}
+\end{equation*}
+
+commutes.
+
+It is sufficient to consider a map $p:A \to B$ in $H^{A}(B)$ as it travels around the square. Going down, we have first $H^{f}_{B}(p) = p \circ f$, and then to the right we have $H^{A'}(g)(p \circ f) = g \circ (p \circ f)$. Going to the right we have $H^{A}(g)(p) = g \circ p$, and then going down we have $H^{f}_{B'}(g \circ p) = (g \circ p) \circ f$. However, since morphism composition is associative, these two things are equal and so the square indeed commutes.
+\end{proof}
+
 \nocite{*}
 \bibliographystyle{alpha}
 \bibliography{refyoneda}
