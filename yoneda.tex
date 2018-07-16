@@ -35,9 +35,9 @@
 Some notes on the Yoneda Lemma, starting with the notion of representable functors.
 \end{abstract}
 
-\subsection*{Representable Functors}
+\subsection*{Covariant Representable Functors}
 
-We first define a \emph{prototype} of a representable functor out of a locally small category $\mathscr{A}$.
+We first define a \emph{prototype} of a covariant representable functor out of a locally small category $\mathscr{A}$.
 
 \begin{defn}
 Let $\mathscr{A}$ be a locally small category, and fix $A \in \mathscr{A}$. Define the functor $H^{A}=\mathscr{A}(A, -): \mathscr{A} \to \textbf{Set}$ by the following mapping on
@@ -48,11 +48,9 @@ Let $\mathscr{A}$ be a locally small category, and fix $A \in \mathscr{A}$. Defi
 \end{enumerate}
 \end{defn}
 
-This is the covariant version of $H$, there is a contravariant version, denoted $H_{A}$ which does pre-composition instead.
+From this prototype of a representable functor, we can now define covariant representable functors:
 
-From this prototype of a representable functor, we can now define representable functors:
-
-\begin{defn}[Representable Functor]
+\begin{defn}[Covariant Representable Functor]
 Let $\mathscr{A}$ be a locally small category. A functor $X:\mathscr{A} \to \textbf{Set}$ is representable if $X$ is naturally isomorphic to $H^{A}$ for some $A \in \mathscr{A}$. A representation of $X$ is a choice of an object $A$ along with a natural isomorphism from $H^{A}$ to $X$.
 \end{defn}
 
@@ -95,7 +93,7 @@ Hence $1_{\textbf{Set}}$ is represented by $H^{1}$.
 Similarly to the example above, $\text{ob}:\textbf{Cat} \to \textbf{Set}$ which sends a small category to its underlying set of objects is represented by $H^{\textbf{1}}$ where $\textbf{1}$ is the one-object category. This is because when $\mathscr{B}$ is a category, $H^{\textbf{1}}(\mathscr{B}) = \textbf{Cat}(\textbf{1}, \mathscr{B})$ which picks out objects of $\mathscr{B}$ and is isomorphic to $\text{ob}\mathscr{B}$. The proof that these functors are naturally isomorphic is essentially the same as the one for $1_{\textbf{Set}}$ and $H^{1}$ in the example above.
 \end{ex}
 
-\subsection*{Adjoints and Representables}
+\subsubsection*{Adjoints and Representables}
 
 Now we establish the claim that any set valued functor with a left adjoint is representable. We first prove the following lemma.
 
@@ -131,7 +129,7 @@ Any set-valued functor that has a left adjoint is representable.
 Let $G:\mathscr{A}\to\textbf{Set}$ be a functor with left adjoint $F$. Let $1$ denote the set with a single element. For all $A \in \mathscr{A}$, $G(A)$ is a set and by example \ref{ex-set} above, $H^{1}(G(A)) = \textbf{Set}(1, G(A)) \cong G(A)$ naturally in $A$ where $H^{1}$ is our functor from $\textbf{Set}$ to $\textbf{Set}$ in example \ref{ex-set} above. So $G \cong \textbf{Set}(1, G(-))$ and by the lemma above, this means $G$ is representable.
 \end{proof}
 
-\subsection*{Maps Between Representable Functors}
+\subsubsection*{Covariant Embedding}
 
 \begin{prop}
 Let $f:A' \to A$, then $f$ induces a natural transformation $H^{f}: H^{A} \Rightarrow H^{A'}$ with components $H^{f}_{B}:H^{A}(B) \to H^{A'}(B)$ so that a map $p:A \to B$ in $H^{A}(B)$ gets mapped via precomposition with $f$ to $p \circ f: A' \to B$.
@@ -153,6 +151,75 @@ We need to show that this map $H^{f}$ is indeed a natural transformation. Let $g
 commutes.
 
 It is sufficient to consider a map $p:A \to B$ in $H^{A}(B)$ as it travels around the square. Going down, we have first $H^{f}_{B}(p) = p \circ f$, and then to the right we have $H^{A'}(g)(p \circ f) = g \circ (p \circ f)$. Going to the right we have $H^{A}(g)(p) = g \circ p$, and then going down we have $H^{f}_{B'}(g \circ p) = (g \circ p) \circ f$. However, since morphism composition is associative, these two things are equal and so the square indeed commutes.
+\end{proof}
+
+With this natural transformation between covariant representables, we have the following definition:
+
+\begin{defn}
+The \emph{covariant embedding} is the functor $H^{\bullet}:\mathscr{A}^{\text{op}} \to [\mathscr{A},\textbf{Set}]$ defined by the following mapping on:
+\begin{enumerate}
+\item \textbf{objects: } For object $A$ in $\mathscr{A}$, $H^{\bullet}(A) = H^{A}$.
+\item \textbf{morphisms: } For morphism $f:A' \to A$, $H^{\bullet}(f) = H^{f}$.
+\end{enumerate}
+\end{defn}
+
+We can do many of the same things with the dual case.
+
+\subsection*{Contravariant Representable Functors}
+
+Again, we start with a definition of the \emph{prototypical} contravariant representable functor:
+
+\begin{defn}
+Let $\mathscr{A}$ be a locally small category with object $A$. Define the functor $H_{A}:\mathscr{A}(-,A):\mathscr{A}^{\text{op}} \to \textbf{Set}$ by the following mapping on
+\begin{enumerate}
+\item \textbf{objects:} For object $B$ in $\mathscr{A}$, define $H_{A}(B)=\mathscr{A}(B,A)$.
+\item \textbf{morphisms:} For morphism $g:B' \to B$, define $H_{A}(g)=\mathscr{A}(g,A):\mathscr{A}(B,A) \to \mathscr{A}(B',A)$ by $p:B \to A \mapsto p \circ g: B' \to B \to A$.
+\end{enumerate}
+\end{defn}
+
+Similar to the covariant case, any functor $F:\mathscr{A}^{\text{op}} \to \textbf{Set}$ that is naturally isomorphic to a \emph{prototypical} contravariant representable functor is called contravariantly representable.
+
+\begin{ex}
+The functor $\mathscr{P}:\textbf{Set}^{\text{op}} \to \textbf{Set}$ which maps sets to their powersets and maps functions $g:B' \to B$ to $\mathscr{P}(g)=g^{-1}U$ for all $U \in \mathscr{P}(B)$ where $g^{-1}U=\{x' \in B' | g(x') \in U\}$ is naturally isomorphic to $H_{2}:\textbf{Set}^{\text{op}} \to \textbf{Set}$ where $2$ denotes the set with two elements.
+
+To show this, we first need to realize that a subset of a set $B$ is just a boolean mapping from the set to $2$ ($f(b)=1$ means $b$ is in that subset). So $H_2(B)=\textbf{Set}(B,2) \cong \mathscr{P}(B)$. Define $t_{B}:H_2(B) \to \mathscr{P}(B)$ with this isomorphism. We show that the $t_B$'s are natural in $B$ and therefore define the components of a natural transformation $t:H_2 \Rightarrow \mathscr{P}$. Let $B,B'$ be sets, and let $g$ be a map from $B'$ to $B$. To do this, we show that the following naturality square commutes:
+
+\begin{equation*}
+\begin{xy}
+(0,0)*+{H_2(B)}="h2b"; (30,0)*+{H_2(B')}="h2bp"; (0,-30)*+{\mathscr{P}(B)}="pb"; (30,-30)*+{\mathscr{P}(B')}="pbp";
+{\ar "h2b";"pb"}?*!/^4mm/{t_B};
+{\ar "h2b";"h2bp"}?*!/_4mm/{H_2(g)};
+{\ar "h2bp";"pbp"}?*!/_4mm/{t_{B'}};
+{\ar "pb";"pbp"}?*!/^4mm/{\mathscr{P}(g)};
+\end{xy}
+\end{equation*}
+
+Consider a map $u:B \to 2$ that picks out an associated subset $U \subseteq B$. $t_B(u)$ gives precisely this subset $U$, and $\mathscr{P}(g)(U)$ gives the subset $U'$ of $B'$ that maps along $g$ into $U$. On the other hand, $H_2(g)(u)$ precomposes $g$ with $u$ to give the mapping $u \circ g: B' \to B \to 2$ which picks out the subset $U'$ of $B'$ that, when mapped along $g$ gives back $U$. And $t_B'(u \circ g)$ gives this $U'$. So the diagram commutes.
+
+Hence, $\mathscr{P}$ is represented by $H_2$.
+\end{ex}
+
+\subsubsection*{Contravariant Embedding}
+
+Similar to the covariant case, the map $f:A \to A'$ induces a natural transformation $H_f: H_A \Rightarrow H_{A'}$ with components $H_f^B:H_A(B) \to H_{A'}(B)$ such that a map $p:B \to A \mapsto f \circ p: B \to A \to A'$.
+
+This gives rise to the following contravariant embedding (which we will call the Yoneda Embedding)
+
+\begin{defn}[Yoneda Embedding]
+Let $\mathscr{A}$ be a locally small category. The Yoneda Embedding is the functor $H_{\bullet}:\mathscr{A} \to [\mathscr{A}^{\text{op}},\textbf{Set}]$ defined by the following mapping on:
+
+\begin{enumerate}
+\item \textbf{objects: } For object $A$ in $\mathscr{A}$, $H_{\bullet}(A) = H_A$.
+\item \textbf{morphisms: } For morphism $f: A \to A'$, $H_{\bullet}(f) = H_f$.
+\end{enumerate}
+\end{defn}
+
+\begin{prop}
+$H_{\bullet}$ is injective on isomorphism classes of objects.
+\end{prop}
+
+\begin{proof}
+Let $A,A'$ be objects in $\mathscr{A}$ such that $H_A \cong H_{A'}$. We need to show $A \cong A'$, that is, find maps between $A, A'$ that are mutually inverse. Since $H_A \cong H_{A'}$, that means there are maps $f: A \to A'$ and $g: A' \to A$ such that $H_f \circ H_g = 1_{H_{A'}}$ and $H_g \circ H_f = 1_{H_{A}}$. Spelling this first one out, we have that for any object $B$, $H_{A'}(B) \overset{H_g^B}{\longrightarrow} H_A(B) \overset{H_f^B}{\longrightarrow} H_{A'}(B) = 1_{H_{A'}(B)}$. This means any map $q: B \to A'$, after getting transformed by $H_f^B \circ H_g^B$ into $f \circ g \circ q$ is still equal to $q$, which implies $f \circ g = 1_{A'}$. Similarly, $H_g^B \circ H_f^B = 1_{H{A}(B)}$ means any map $p: B \to A$, after getting transformed by $H_g^B \circ H_f^B$ into $g \circ f \circ p$ is still equal to $p$, and $g \circ f \circ p = p$ implies $g \circ f = 1_{A}$. Hence, $A \cong A'$.
 \end{proof}
 
 \nocite{*}
