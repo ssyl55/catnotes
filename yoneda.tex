@@ -222,6 +222,12 @@ $H_{\bullet}$ is injective on isomorphism classes of objects.
 Let $A,A'$ be objects in $\mathscr{A}$ such that $H_A \cong H_{A'}$. We need to show $A \cong A'$, that is, find maps between $A, A'$ that are mutually inverse. Since $H_A \cong H_{A'}$, that means there are maps $f: A \to A'$ and $g: A' \to A$ such that $H_f \circ H_g = 1_{H_{A'}}$ and $H_g \circ H_f = 1_{H_{A}}$. Spelling this first one out, we have that for any object $B$, $H_{A'}(B) \overset{H_g^B}{\longrightarrow} H_A(B) \overset{H_f^B}{\longrightarrow} H_{A'}(B) = 1_{H_{A'}(B)}$. This means any map $q: B \to A'$, after getting transformed by $H_f^B \circ H_g^B$ into $f \circ g \circ q$ is still equal to $q$, which implies $f \circ g = 1_{A'}$. Similarly, $H_g^B \circ H_f^B = 1_{H{A}(B)}$ means any map $p: B \to A$, after getting transformed by $H_g^B \circ H_f^B$ into $g \circ f \circ p$ is still equal to $p$, and $g \circ f \circ p = p$ implies $g \circ f = 1_{A}$. Hence, $A \cong A'$.
 \end{proof}
 
+\subsection*{The Yoneda Lemma}
+
+\begin{theo}[The Yoneda Lemma]
+Let $\mathscr{A}$ be a locally small category. Then $[\mathscr{A}^{\text{op}}, \textbf{Set}](H_A,X) \cong X(A)$ naturally in $A \in \mathscr{A}$ and $X \in [\mathscr{A}^{\text{op}}, \textbf{Set}]$.
+\end{theo}
+
 \nocite{*}
 \bibliographystyle{alpha}
 \bibliography{refyoneda}
