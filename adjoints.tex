@@ -227,9 +227,159 @@ Given $g:F(A) \to B$, define $t_{A,B}(g)=Gg \circ \eta_{A}$, and given $f: A \to
 Let $g:F(A) \to B$, $h: F(A) \to B$ with $g = h$. Since $G$ is well-defined, $t_{A,B}(g)=Gg \circ \eta_{A} = Gh \circ \eta_{A} = t_{A,B}(h)$, so $t$ is well-defined. Similarly for $t^{-1}$.
 
 \emph{Isomorphism}
+Let $g:F(A) \to B$. Need to show that $t^{-1}_{A,B}(t_{A,B}(g)) = g$. Now by the definition of $t$ and functoriality of $F$:
+\begin{align*}
+t^{-1}_{A,B}(t_{A,B}(g)) 	&= t^{-1}_{A,B}(Gg \circ \eta_{A}) \\
+					&=\varepsilon_{B} \circ F(Gg \circ \eta_{A}) \\
+					&=\varepsilon_{B} \circ FGg \circ F(\eta_{A})
+\end{align*}
 
+So we have the diagram
+\begin{equation*}
+\begin{xy}
+(0,0)*+{F(A)}="1"; (30,0)*+{FGF(A)}="2"; (60,0)*+{FG(B)}="3"; (60,-30)*+{B}="4";
+{\ar "1";"2"}?*!/_4mm/{F(\eta_{A})};
+{\ar "2";"3"}?*!/_4mm/{FG(g)};
+{\ar "3";"4"}?*!/_4mm/{\varepsilon_{B}};
+\end{xy}
+\end{equation*}
+
+However, by naturality of $\varepsilon$ with respect to the map $g$, we can add the following naturality square:
+
+\begin{equation*}
+\begin{xy}
+(0,0)*+{F(A)}="1"; (30,0)*+{FGF(A)}="2"; (60,0)*+{FG(B)}="3"; (60,-30)*+{B}="4";
+(30,-30)*+{F(A)}="5";
+{\ar "1";"2"}?*!/_4mm/{F(\eta_{A})};
+{\ar "2";"3"}?*!/_4mm/{FG(g)};
+{\ar "3";"4"}?*!/_4mm/{\varepsilon_{B}};
+{\ar "2";"5"}?*!/^6mm/{\varepsilon_{F(A)}};
+{\ar "5";"4"};?*!/^4mm/{g};
+\end{xy}
+\end{equation*}
+
+And finally we have the triangle identity, so we can finally add:
+\begin{equation*}
+\begin{xy}
+(0,0)*+{F(A)}="1"; (30,0)*+{FGF(A)}="2"; (60,0)*+{FG(B)}="3"; (60,-30)*+{B}="4";
+(30,-30)*+{F(A)}="5";
+{\ar "1";"2"}?*!/_4mm/{F(\eta_{A})};
+{\ar "2";"3"}?*!/_4mm/{FG(g)};
+{\ar "3";"4"}?*!/_4mm/{\varepsilon_{B}};
+{\ar "2";"5"}?*!/^6mm/{\varepsilon_{F(A)}};
+{\ar "5";"4"};?*!/^4mm/{g};
+{\ar "1";"5"}?*!/^4mm/{1_{F(A)}};
+\end{xy}
+\end{equation*}
+
+So by commutativity of the diagram, $\varepsilon_{B} \circ FGg \circ F(\eta_{A}) = g \circ 1_{F(A)} = g$.
+
+Let $f:A \to G(B)$. We also need to show $t_{A,B}(t^{-1}_{A,B}(f)) = f$. Again by our definition of $t$ and functoriality of $G$, we have
+
+\begin{align*}
+t_{A,B}(t^{-1}_{A,B}(f))	&= t_{A,B}(\varepsilon_{A} \circ Ff) \\
+					&= G(\varepsilon_{B} \circ Ff) \circ \eta_{A} \\
+					&= G(\varepsilon_{B}) \circ GFf \circ \eta_{A}
+\end{align*}
+
+Again we have the diagram
+\begin{equation*}
+\begin{xy}
+(0,-30)*+{A}="1";(0,0)*+{GF(A)}="2"; (30,0)*+{GFG(B)}="3"; (60,0)*+{G(B)}="4";
+{\ar "1";"2"}?*!/_3mm/{\eta_{A}};
+{\ar "2";"3"}?*!/_3mm/{GFf};
+{\ar "3";"4"}?*!/_3mm/{\varepsilon_{B}};
+\end{xy}
+\end{equation*}
+
+which again, because of naturality of $\eta$ with respect to the map $f$ and the triangle identity, we have
+\begin{equation*}
+\begin{xy}
+(0,-30)*+{A}="1";(0,0)*+{GF(A)}="2"; (30,0)*+{GFG(B)}="3"; (60,0)*+{G(B)}="4";
+(30,-30)*+{G(B)}="5";
+{\ar "1";"2"}?*!/_4mm/{\eta_{A}};
+{\ar "2";"3"}?*!/_4mm/{GFf};
+{\ar "3";"4"}?*!/_4mm/{\varepsilon_{B}};
+{\ar "1";"5"}?*!/^4mm/{f};
+{\ar "5";"3"}?*!/_6mm/{\eta_{G(B)}};
+{\ar "5";"4"}?*!/_6mm/{1_{G(B)}}
+\end{xy}
+\end{equation*}
+
+So indeed $G(\varepsilon_{B}) \circ GFf \circ \eta_{A} = 1_{G(B)} \circ f = f$.
+
+\emph{Naturality} Now we will show that $t$ is natural in $A$ and that $t^{-1}$ is natural in $B$. First we have the following data:
+\begin{equation*}
+\begin{xy}
+(0,0)*+{A'}="ap"; (30, 0)*+{F(A')}="fap"; (0, -30)*+{A}="a"; (30, -30)*+{F(A)}="fa"; (30, -60)*+{B}="b";
+{\ar "ap";"a"}?*!/^3mm/{f}; {\ar "fap";"fa"}?*!/_4mm/{Ff}; {\ar "fa";"b"}?*!/_3mm/{g};
+{\ar@{|->} "ap";"fap"}; {\ar@{|->} (3,-15);(24, -15)}; {\ar@{|->} "a";"fa"};
+\end{xy}
+\end{equation*}
+and by definition $t_{A',B}(g \circ Ff) = G(g \circ Ff) \circ \eta_{A'} = Gg \circ GFf \circ \eta_{A'}$. We want to show that this equals $Gg \circ \eta_{A} \circ f = t_{A,B}(g) \circ f$. From $Gg \circ GFf \circ \eta_{A'}$ we have the following diagram:
+\begin{equation*}
+\begin{xy}
+(0,-30)*+{A'}="1";(0,0)*+{GF(A')}="2";(30,0)*+{GF(A)}="3";(60,0)*+{G(B)}="4";
+{\ar "1";"2"}?*!/_4mm/{\eta_{A'}};
+{\ar "2";"3"}?*!/_4mm/{GFf};
+{\ar "3";"4"}?*!/_4mm/{Gg};
+\end{xy}
+\end{equation*}
+but by naturality of $\eta$ with respect to the map $f$, we can add the naturality square:
+\begin{equation*}
+\begin{xy}
+(0,-30)*+{A'}="1";(0,0)*+{GF(A')}="2";(30,0)*+{GF(A)}="3";(60,0)*+{G(B)}="4";(30,-30)*+{A}="5";
+{\ar "1";"2"}?*!/_4mm/{\eta_{A'}};
+{\ar "2";"3"}?*!/_4mm/{GFf};
+{\ar "3";"4"}?*!/_4mm/{Gg};
+{\ar "1";"5"}?*!/^4mm/{f};
+{\ar "5";"3"}?*!/^4mm/{\eta_{A}};
+\end{xy}
+\end{equation*}
+
+So $Gg \circ GFf \circ \eta_{A'} = Gg \circ \eta_{A} \circ f = t_{A,B}(g) \circ f$, so $t$ is natural in $A$.
+
+For naturality of $t^{-1}$ in $B$, we have the following data:
+\begin{equation*}
+\begin{xy}
+(30, 0)*+{A}="a"; (0, -30)*+{B}="b"; (30, -30)*+{G(B)}="gb"; (0, -60)*+{B'}="bp"; (30, -60)*+{G(B')}="gbp";
+{\ar "a";"gb"}?*!/_3mm/{f}; {\ar "gb";"gbp"}?*!/_4mm/{Gg}; {\ar "b";"bp"}?*!/^3mm/{g};
+{\ar@{|->} "b";"gb"}; {\ar@{|->} "bp";"gbp"}; {\ar@{|->} (3, -45);(24, -45)};
+\end{xy}
+\end{equation*}
+and again by definition of $t^{-1}$ and functoriality of $F$, we have $t^{-1}_{A,B'}(Gg \circ f) = \varepsilon_{B'} \circ F(Gg \circ f) = \varepsilon_{B'} \circ FGg \circ Ff$. We want to show that this is equal to $g \circ \varepsilon_{B} \circ Ff$. From $\varepsilon_{B'} \circ FGg \circ Ff$ we have the following diagram:
+\begin{equation*}
+\begin{xy}
+(0,0)*+{F(A)}="1";(30,0)*+{FG(B)}="2";(60,0)*+{FG(B')}="3";(60,-30)*+{B'}="4";
+{\ar "1";"2"}?*!/_4mm/{Ff};
+{\ar "2";"3"}?*!/_4mm/{FGg};
+{\ar "3";"4"}?*!/_4mm/{\varepsilon_{B'}};
+\end{xy}
+\end{equation*}
+but again by naturality of $\varepsilon$ with respect to the map $g$, we can add the naturality square:
+\begin{equation*}
+\begin{xy}
+(0,0)*+{F(A)}="1";(30,0)*+{FG(B)}="2";(60,0)*+{FG(B')}="3";(60,-30)*+{B'}="4";(30,-30)*+{B}="5";
+{\ar "1";"2"}?*!/_4mm/{Ff};
+{\ar "2";"3"}?*!/_4mm/{FGg};
+{\ar "3";"4"}?*!/_4mm/{\varepsilon_{B'}};
+{\ar "2";"5"}?*!/^4mm/{\varepsilon_{B}};
+{\ar "5";"4"}?*!/_4mm/{g};
+\end{xy}
+\end{equation*}
+So indeed $\varepsilon_{B'} \circ FGg \circ Ff = g \circ \varepsilon_{B} \circ Ff$.
+
+\emph{Inverse}
+We finally need to show that this process of corresponding between $t$ and $(\eta, \varepsilon)$ is mutually inverse. 
+
+We began with the adjunction $t: \mathscr{B}(F(-),-)) \to \mathscr{A}(-, G(-))$ and from it we derived the unit and counit of the adjunction, namely that $\eta_A=t_{A,FA}(1_{FA})$ and $\varepsilon_B = t^{-1}_{GB, B}(1_{GB})$. So this process defines a mapping $t \mapsto (\eta^t, \varepsilon^t)$. Let's call this mapping $\Gamma$, that is, $\Gamma(t) = (\eta^t, \varepsilon^t)$. Going the other way we showed that the unit and counit determine the whole adjunction, meaning that for any $g: FA \to B$, $t_{A,B}(g) = Gg \circ \eta_A$ and for any $f: A \to GB$, $t^{-1}_{A,B}(f) = \varepsilon_B \circ Ff$. So we have a mapping $(\eta, \varepsilon) \mapsto s$. Notice that this unit and counit pair are not necessarily the same ones derived from the adjunction $t$, and the resulting adjunction from this pair is not necessarily the same as before. Something else to note is that technically from $\eta$ we get the adjunction $s$, while $\varepsilon$ would give us $s^{-1}$. But we're just going to worry about $s$ for now. Let's call this mapping $\Delta$, that is, $\Delta(\eta, \varepsilon) = s$. The goal is to then show that $\Delta(\Gamma(t)) = t$ and $\Gamma(\Delta(\eta, \varepsilon)) = (\eta, \varepsilon)$.
+
+First we show $\Delta(\Gamma(t)) = t$. Now I'm fudging with the notation a little bit here, but for all $A$ and $B$, $\Gamma(t_{A,B}) = ({t_{A,FA}(1_{FA})}, t^{-1}_{GB,B}(1_{GB}))$. And $\Delta({t_{A,FA}(1_{FA})}, t^{-1}_{GB,B}(1_{GB}))=Gg \circ t_{A,FA}(1_{FA})$ for any $g: FA \to B$ (Notice we threw away $t^{-1}$ here, like we noted above). Now by naturality of $t$, $Gg \circ t_{A,FA}(1_{FA}) = t_{A,B}(g \circ 1_{FA}) = t_{A,B}(g)$. (The same thing happens to $t^{-1}$ by naturality). So indeed $\Delta(\Gamma(t)) = t$.
+
+Finally we show $\Gamma(\Delta(\eta, \varepsilon)) = (\eta, \varepsilon)$. Now again, not worrying particularly about inverses and fudging with the notation, we have $\Delta(\eta, \varepsilon)) = G(-) \circ \eta_{A}$. And $\Gamma(G(-) \circ \eta_{A}) = G1_{FA} \circ \eta_A = 1_{GFA} \circ \eta_A = \eta_A$. A similar thing happens with $\varepsilon_B \circ F(-)$. So in fact $\Gamma(\Delta(\eta, \varepsilon)) = (\eta, \varepsilon)$.
+
+So the processes are mutually inverse, concluding the proof.
 \end{proof}
-
  \nocite{*}
  \bibliographystyle{alpha}
  \bibliography{refadjoints}
