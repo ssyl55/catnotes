@@ -219,7 +219,33 @@ $H_{\bullet}$ is injective on isomorphism classes of objects.
 \end{prop}
 
 \begin{proof}
-Let $A,A'$ be objects in $\mathscr{A}$ such that $H_A \cong H_{A'}$. We need to show $A \cong A'$, that is, find maps between $A, A'$ that are mutually inverse. Since $H_A \cong H_{A'}$, that means there are maps $f: A \to A'$ and $g: A' \to A$ such that $H_f \circ H_g = 1_{H_{A'}}$ and $H_g \circ H_f = 1_{H_{A}}$. Spelling this first one out, we have that for any object $B$, $H_{A'}(B) \overset{H_g^B}{\longrightarrow} H_A(B) \overset{H_f^B}{\longrightarrow} H_{A'}(B) = 1_{H_{A'}(B)}$. This means any map $q: B \to A'$, after getting transformed by $H_f^B \circ H_g^B$ into $f \circ g \circ q$ is still equal to $q$, which implies $f \circ g = 1_{A'}$. Similarly, $H_g^B \circ H_f^B = 1_{H{A}(B)}$ means any map $p: B \to A$, after getting transformed by $H_g^B \circ H_f^B$ into $g \circ f \circ p$ is still equal to $p$, and $g \circ f \circ p = p$ implies $g \circ f = 1_{A}$. Hence, $A \cong A'$.
+Let $A,A'$ be objects in $\mathscr{A}$ such that $H_A \cong H_{A'}$. We need to show $A \cong A'$, that is, find maps $f: A \to A'$, $g: A' \to A$ that are mutually inverse. Since $H_A \cong H_{A'}$ that means there are maps (natural transformations) $\alpha:H_A \Rightarrow H_{A'}$ and $\beta:H_{A'} \Rightarrow H_A$ such that $\alpha \circ \beta = 1_{H_{A'}}$ and $\beta \circ \alpha = 1_{H_A}$. We need to use $\alpha$ and $\beta$ to construct the $f$ and $g$ we need. 
+
+First let's consider the components of $\alpha$. Let $B$ be an object in $\mathscr{A}$. Then $\alpha_B$ is a map from $H_A(B) \to H_{A'}(B)$. Letting $B=A$, we have $\alpha_A:H_A(A) \to H_{A'}(A)$. Now, we don't know what morphisms there are in $H_A(A)$, but we certainly know that $1_A$ exists. And applying $\alpha_A$ to $1_A$, we get a map $\alpha_A(1_A):A \to A'$.
+
+Similarly, considering $\beta_{A'}$ applied to $(1_{A'})$, we get a map $\beta_{A'}(1_{A'}):A' \to A$.
+
+So now we have our maps between $A$ and $A'$. We need to show that they are mutually inverse.
+
+Naturality of $\alpha$ in $B$ means that for every $p: B \to B'$ the following naturality square holds (note the contravariance):
+
+\begin{equation*}
+\begin{xy}
+(0,0)*+{H_A(B)}="v1"; (30,0)*+{H_A(B')}="v2"; (0,-30)*+{H_{A'}(B)}="v3"; (30,-30)*+{H_{A'}(B')}="v4";
+{\ar "v1";"v3"}?*!/^4mm/{\alpha_B};
+{\ar "v2";"v1"}?*!/^4mm/{- \circ p};
+{\ar "v2";"v4"}?*!/_4mm/{\alpha_{B'}};
+{\ar "v4";"v3"}?*!/_4mm/{- \circ p};
+\end{xy}
+\end{equation*}
+
+In particular, if $x:B' \to A$ is a map $H_A(B')$, then $\alpha_B(x \circ p) = \alpha_{B'}(x) \circ p$.
+
+Again, what we need is a specialization of this general phenomenon. Letting $x=1_A$, which means making $B = A'$ and $B' = A$, our $p$ becomes a map from $A' \to A$ and by naturality above we have $\alpha_{A'}(1_A \circ p) = \alpha_A(1_A) \circ p$. Now $p$ is a map from $A' \to A$, so letting $p = \beta_{A'}(1_{A'})$ we have that $\alpha_A(1_A) \circ \beta_{A'}(1_{A'}) = \alpha_{A'}(1_A \circ \beta_{A'}(1_{A'})) = \alpha_{A'}(\beta_{A'}(1_{A'}))$. But since $\alpha_{A'}$ and $\beta_{A'}$ are mutually inverse, this just means $\alpha_A(1_A) \circ \beta_{A'}(1_{A'}) = 1_{A'}$, which is precisely what we wanted.
+
+Similarly, we can show using the naturality of $\beta$ and specializing to $1_{A'}$ that $\beta_{A'}(1_{A'}) \circ \alpha_A(1_A) = 1_A$.
+
+Thus $A \cong A'$.
 \end{proof}
 
 \subsection*{The Yoneda Lemma}
