@@ -254,6 +254,89 @@ Thus $A \cong A'$.
 Let $\mathscr{A}$ be a locally small category. Then $[\mathscr{A}^{\text{op}}, \textbf{Set}](H_A,X) \cong X(A)$ naturally in $A \in \mathscr{A}$ and $X \in [\mathscr{A}^{\text{op}}, \textbf{Set}]$.
 \end{theo}
 
+\begin{proof}
+First let's give a quick outline of the proof:
+\begin{enumerate}
+\item Produce a mapping $t_{A,X}: [\mathscr{A}^{\text{op}}, \textbf{Set}](H_A, X) \to XA$.
+\item Produce a mapping $t^{-1}_{A,X}: XA \to [\mathscr{A}^{\text{op}}, \textbf{Set}](H_A,X)$.
+\item Show that $t,t^{-1}$ are mutually inverse.
+\item Show that $t$ is natural in $A$.
+\item Show that $t$ is natural in $X$.
+\end{enumerate}
+
+We're not going to do these steps in order, instead we'll do these steps the way I did it when I came up with the proof, so you'll see my motivation for each successive step.
+
+Let's begin with step 1. Let $\alpha:H_A \Rightarrow X$ be a natural transformation. Looking at $\alpha$'s components, $\alpha_B:H_A(B) \to XB$ sends a map $g:B \to A$ to the element of $XB$, $\alpha_B(g)$. $t_{A,X}$ needs to map $\alpha$ to one specific element of $XA$. Consider the special case where $B=A$. Then we have the component $\alpha_A:H_A(A) \to XA$. Since the only map we are certain exists in $H_A(A)$ is the identity map $1_A$, this suggests we need to define $t_{A,X}(\alpha) = \alpha_A(1_A)$.
+
+To check that this mapping is the correct one, let's first check that $t_{A,X}$ is natural in $X$. Let $F:X \Rightarrow X'$ be a natural transformation. $t_{A,X}$ natural in $X$ means that the following naturality square holds:
+
+\begin{equation*}
+\begin{xy}
+(0,0)*+{[\mathscr{A}^{\text{op}},\textbf{Set}](H_A,X)}="v1"; (60,0)*+{[\mathscr{A}^{\text{op}},\textbf{Set}](H_A,X')}="v2"; (0,-30)*+{XA}="v3"; (60,-30)*+{X'A}="v4";
+{\ar "v1";"v2"}?*!/_4mm/{F \circ -};
+{\ar "v1";"v3"}?*!/^6mm/{t_{A,X}};
+{\ar "v2";"v4"}?*!/_6mm/{t_{A,X'}};
+{\ar "v3";"v4"}?*!/^4mm/{F_A};
+\end{xy}
+\end{equation*}
+
+Let $\alpha:H_A \Rightarrow X$ be a natural transformation. Then going down first and then to the right via $F_A$ we have $F_A(t_{A,X}(\alpha)) = F_A(\alpha_A(1_A))$. On the other hand going right first via $F \circ -$ and then down we have $t_{A,X'}(F \circ \alpha) = (F \circ \alpha)_A(1_A)$. And by compositionality, $(F \circ \alpha)_A(1_A) = F_A \circ \alpha_A(1_A) = F_A(\alpha_A(1_A))$. So $t_{A,X}$ is indeed natural in $X$.
+
+Now let us check that $t_{A,X}$ is natural in $A$. We won't succeed yet but this will give us a hint as to how we should define $t_{A,X}^{-1}$. Let $f$ be a map from $A$ to $A'$. We need to check that the following naturality square commutes:
+
+\begin{equation*}
+\begin{xy}
+(0,0)*+{[\mathscr{A}^{\text{op}},\textbf{Set}](H_A,X)}="v1"; (60,0)*+{[\mathscr{A}^{\text{op}},\textbf{Set}](H_{A'},X)}="v2"; (0,-30)*+{XA}="v3"; (60,-30)*+{XA'}="v4";
+{\ar "v2";"v1"}?*!/^4mm/{- \circ H_f};
+{\ar "v1";"v3"}?*!/^6mm/{t_{A,X}};
+{\ar "v2";"v4"}?*!/_6mm/{t_{A',X}};
+{\ar "v4";"v3"}?*!/_4mm/{Xf};
+\end{xy}
+\end{equation*}
+
+Let $\alpha':H_{A'} \Rightarrow X$ be a natural transformation. Then going down first and then left via $Xf$ we have $Xf(t_{A',X}(\alpha')) = Xf(\alpha'_{A'}(1_{A'}))$. On the other hand, going to the left first via $- \circ H_f$ and then down, we have $t_{A,X}(\alpha' \circ H_f) = (\alpha'_{A} \circ H_f^A)(1_A)=\alpha'_{A}(f)$ (Because $H_f^A(1_A) = f \circ 1_A) = f$. So we need to have the equality
+
+\begin{equation*}
+Xf(\alpha'_{A'}(1_{A'})) = \alpha'_{A}(f)
+\end{equation*}
+
+Which we can't prove just yet. However, this does give us a hint as to how we should define $t_{A,X}^{-1}$. Notice that $\alpha'_{A'}(1_A')$ is an element of $XA'$ and that for every $g:B \to A' \in H_{A'}(B)$, $g \mapsto Xg(\alpha'_{A'}(1_A'))$ defines a mapping from $H_{A'}(B)$ to $XB$, which is beginning to look like the components of a natural transformation $H_{A'} \Rightarrow X$.
+
+With that let us define our mapping $t_{A,X}^{-1}:XA \to [\mathscr{A}^{\text{op}}, \textbf{Set}](H_A,X)$. Let $x$ be an element of $XA$. We define $t_{A,X}^{-1}(x) = \left( X(f: B \to A)(x) \right)_{B \in \mathscr{A}}$. So for each $B$, we have a family of morphisms $H_A(B) \to XB$ given by $f \mapsto Xf(x)$. Now we need to check that this family of morphisms does indeed form a natural transformation $H_A \Rightarrow X$. 
+
+Let $k: B \to B'$. We need to check that the following naturality square commutes:
+
+\begin{equation*}
+\begin{xy}
+(0,0)*+{H_A(B)}="v1"; (30,0)*+{H_A(B')}="v2"; (0,-30)*+{XB}="v3"; (30,-30)*+{XB'}="v4";
+{\ar "v2";"v1"}?*!/^4mm/{- \circ k};
+{\ar "v1";"v3"}?*!/^18mm/{X(-:B \to A)(x)};
+{\ar "v2";"v4"}?*!/_18mm/{X(-':B' \to A)(x)};
+{\ar "v4";"v3"}?*!/_4mm/{Xk};
+\end{xy}
+\end{equation*}
+
+Let $p: B' \to A$. Then going left and down we first have $p \circ k: B \to A$ which then becomes $X(p \circ k)(x)$. On the other hand, going down first and then left we have $Xk(Xp(x))$. These expressions are equal by the (co)functoriality of $X$. So $t_{A,X}^{-1}(x)$ does indeed yield a natural transformation.
+
+Now we need to check that $t_{A,X}$ and $t_{A,X}^{-1}$ are in fact mutually inverse. Let $x \in XA$. Then $t_{A,X}(t_{A,X}^{-1}(x)) = t_{A,X}(X(-)(x)) = (X(-)(x))_A(1_A) = X1_A(x) = 1_{XA}(x)=x$. So $t_{A,X} \circ t_{A,X}^{-1}$ does indeed equal $1_{XA}$. The other direction is a little bit harder:
+
+Let $\alpha$ be a natural transformation from $H_A \Rightarrow X$. $t_{A,X}^{-1}(t_{A,X}(\alpha)) = t_{A,X}^{-1}(\alpha_A(1_A)) = X(-)(\alpha_A(1_A))$. Let $f: B \to A$. For $X(-)(\alpha_A(1_A)) = \alpha$, we need to have $Xf(\alpha_A(1_A)) = \alpha_B(f)$ for every $f$. The only tool we have at our disposal is naturality, either naturality of $X(-)(x)$ which we just established, or the naturality of $\alpha$. When I first went about trying to prove this I thought we ought to use the naturality of $X(-)(x)$, however it turns out that the correct thing to do is use the naturality of $\alpha$. (Thank you \cite{leinster_basic_2014}!) Let's write out the naturality square for $\alpha$ with $f$:
+
+\begin{equation*}
+\begin{xy}
+(0,0)*+{H_A(B)}="v1"; (30,0)*+{H_A(A)}="v2"; (0,-30)*+{XB}="v3"; (30,-30)*+{XA}="v4";
+{\ar "v2";"v1"}?*!/^4mm/{- \circ f};
+{\ar "v1";"v3"}?*!/^4mm/{\alpha_B};
+{\ar "v2";"v4"}?*!/_4mm/{\alpha_A};
+{\ar "v4";"v3"}?*!/_4mm/{Xf};
+\end{xy}
+\end{equation*}
+
+Considering the image of $1_A$ as it moves around the square, we have $\alpha_B(1_A \circ f) = \alpha_B(f) = Xf(\alpha_A(1_A))$, which is exactly what we needed.
+
+So $t$ and $t^{-1}$ are mutually inverse, and in fact this last step is also what we needed to prove that $t_{A,X}$ is natural in $A$, so we are done.
+\end{proof}
+
 \nocite{*}
 \bibliographystyle{alpha}
 \bibliography{refyoneda}
