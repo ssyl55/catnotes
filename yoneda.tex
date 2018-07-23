@@ -337,6 +337,20 @@ Considering the image of $1_A$ as it moves around the square, we have $\alpha_B(
 So $t$ and $t^{-1}$ are mutually inverse, and in fact this last step is also what we needed to prove that $t_{A,X}$ is natural in $A$, so we are done.
 \end{proof}
 
+\subsection*{Consequences of the Yoneda Lemma}
+
+One consequence of the Yoneda Lemma is that it justifies the name of the Yoneda Embedding, in that the Yoneda Embedding embeds $\mathscr{A}$ into a full subcategory of its presheaf category:
+
+\begin{prop}
+The Yoneda Embedding: $H_{\bullet}: \mathscr{A} \to [\mathscr{A}^{\text{op}}, \textbf{Set}]$ is full and faithful.
+\end{prop}
+
+\begin{proof}
+$H_{\bullet}$ being full and faithful is another way of saying the map $K: \mathscr{A}(A,A') \to [\mathscr{A}^{\text{op}}, \textbf{Set}](H_{\bullet}(A), H_{\bullet}(A'))$ is bijective for all $A,A' \in \mathscr{A}$. First recall that $H_{\bullet}(A) = H_A$, $H_{\bullet}(A') = H_{A'}$ and that $\mathscr{A}(A,A') = H_{A'}(A)$. So $K$ is actually a map from $H_{A'}(A) \to [\mathscr{A}^{\text{op}}, \textbf{Set}](H_A, H_{A'})$. Remember that $K$ comes from the Yoneda Embedding, which means $K$ takes a morphism $f: A \to A'$ and maps it to $H_f: H_A \to H_{A'}$.
+
+Well, by the Yoneda Lemma, we know there is a bijection $t_{A,H_{A'}}^{-1}: H_{A'}(A) \to [\mathscr{A}^{\text{op}}, \textbf{Set}](H_A, H_{A'})$. If $K$ and $t_{A,H_{A'}}^{-1}$ were actually the same, then that would show that $K$ is bijective. Let's consider what $t_{A, H_{A'}}^{-1}$ actually does. Let $f: A \to A'$. Then $f \in H_{A'}(A)$ and $t_{A,H_{A'}}^{-1}(f) = H_{A'}(g)(f) = f \circ g$ for all $g: B \to A$. So $t_{A,H_{A'}}^{-1}(f)$ is post-composition with $f$, which is exactly what $H_f$ does, so $K$ and $t_{A,H_{A'}}^{-1}$ are in fact the same.
+\end{proof}
+
 \nocite{*}
 \bibliographystyle{alpha}
 \bibliography{refyoneda}
