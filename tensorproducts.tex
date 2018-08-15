@@ -337,6 +337,21 @@ So we have the following chain of isomorphisms:
 &\cong \textbf{Bilin}(X \bigotimes Y, Z; -) \\
 &\cong \textbf{Vect}((X \bigotimes Y) \bigotimes Z, -)
 \end{align*}
+
+which will give us $X \bigotimes (Y \bigotimes Z) \cong (X \bigotimes Y) \bigotimes Z$. The only line in here we need to prove is the isomorphism $\textbf{Bilin}(X, Y \bigotimes Z; -) \cong \textbf{3-lin}(X,Y,Z; -)$. So we need to establish a bijection between bilinear maps $X \times (Y \bigotimes Z) \to W$ with 3-linear maps  $X \times Y \times Z \to W$. Firstly, given a bilinear map $\varphi: X \times (Y \bigotimes Z) \to W$, we can define a 3-linear map $\tilde{\varphi}: X \times Y \times Z \to W$ by $(x,y,z) \mapsto \varphi(x, \iota(y,z))$ where $\iota$ is the canonical map from $Y \times Z \to Y \bigotimes Z$. $\tilde{\varphi}$ is clearly 3-linear because $\varphi$ was linear in $x$ and separately linear in $\iota(y,z)$, while $\iota$ is bilinear.
+
+Now going the other way suppose we had a 3-linear map $\varphi: X \times Y \times Z \to W$. How do we get a bilinear map out of $X \times (Y \bigotimes Z)$? Fixing $x \in X$, we have the bilinear map out of $\varphi_x: Y \times Z \to W$ by $(y,z) \mapsto \varphi(x, y, z)$. By the universal property of the tensor product, $\varphi_x$ gives us a linear map $\delta_x: Y \bigotimes Z \to W$. We now define the bilinear map $\hat{\varphi}: X \times (Y \bigotimes Z) \to W$ by $(x, \sum\limits_{i=1}^{n}y_i \otimes z_i) \mapsto \delta_x(\sum\limits_{i=1}^{n}y_i \otimes z_i)$. Notice that this is a very similar construction in our first proof using the universal property. Since $\delta_x$ is linear, $\hat{\varphi}$ is clearly linear in the second argument. It remains to check that $\hat{\varphi}$ is linear in $x$:
+
+\begin{align*}
+\hat{\varphi}(x_1 + x_2, \sum\limits_{i=1}^{n}y_i \otimes z_i) &= \delta_{x_1 + x_2}(\sum\limits_{i=1}^{n}y_i \otimes z_i) \\
+&= \sum\limits_{i=1}^{n}\delta_{x_1 + x_2}(y_i \otimes z_i) \\
+&= \sum\limits_{i=1}^{n}\delta_{x_1 + x_2}(\iota(y_i, z_i)) \\
+&= \sum\limits_{i=1}^{n}\varphi_{x_1 + x_2}(y_i, z_i) \quad \text{By definition of $\delta_x$} \\
+&= \sum\limits_{i=1}^{n}\varphi(x_1 + x_2, y_i, z_i) \quad \text{By definition of $\varphi_x$} \\
+&= \sum\limits_{i=1}^{n}\varphi(x_1, y_i, z_i) + \varphi(x_2, y_i, z_i) \quad \text{By trilinearity of $\varphi$}
+\end{align*}
+
+Finally, it turns out that $\hat{\tilde{\varphi}} = \varphi$ and $\tilde{\hat{\varphi}} = \varphi$, so these are mutually inverse to each other.
 \end{proof}
 
 \nocite{*}
