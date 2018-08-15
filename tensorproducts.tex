@@ -1,0 +1,346 @@
+\documentclass[11pt]{article}
+
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage[arrow, curve]{xy}
+
+\pagestyle{headings}
+
+\theoremstyle{definition}
+\newtheorem*{defn}{Definition}
+
+\theoremstyle{plain}
+\newtheorem{theo}{Theorem}
+
+\theoremstyle{plain}
+\newtheorem{prop}{Proposition}
+
+\theoremstyle{plain}
+\newtheorem*{lem}{Lemma}
+
+\theoremstyle{definition}
+\newtheorem{ex}{Example}
+
+\begin{document}
+
+\author{Stephen Liu}
+\title{Modules and Tensor Products}
+\date{July 25, 2018}
+
+\maketitle
+
+\begin{abstract}
+Some notes on modules and tensor products of modules.
+\end{abstract}
+
+\subsection*{Modules}
+
+\subsubsection*{The Basics}
+
+\begin{defn}[Modules over a ring]
+Let $R$ be a ring. A left $R$-module $M$ is an abelian group $(M, +)$ with a map $R \times M \to M$ (also known as an action of $R$ over $M$) such that for all $r, s \in R$, $m,n \in M$ we have:
+
+\begin{enumerate}
+\item $(r + s)m = rm + sm$
+\item $r(m + n) = rm + rn$
+\item $(rs)m = r(sm)$
+\item $1m = m$ (If $R$ contains $1$).
+\end{enumerate}
+\end{defn}
+
+We can define right $R$-modules analogously. Note that when $R$ is a field, then a module over a field is precisely the same thing as a vector space over that field.
+
+\begin{defn}[Submodules]
+Let $M$ be a $R$-module. A submodule of $M$ is a subgroup $N$ of $M$ that is closed under the ring action, that is, $rn \in N$ for all $r \in R$, $n \in N$ (in the case of left $R$-modules).
+\end{defn}
+
+One important example of a module are the $\mathbb{Z}$-modules:
+
+\begin{ex}[$\mathbb{Z}$-Modules]
+Consider the ring $\mathbb{Z}$ and any abelian group $A$. Then we can make $A$ into a $\mathbb{Z}$-module by defining the action $\mathbb{Z} \times A \to A$ by
+
+\begin{equation*}
+na = \left\{
+	\begin{array}{rr}
+		a + a + \dots + a \quad \text{(n times)} \quad n > 0 \\
+		0 \quad n = 0 \\
+		-a - a - \dots -a \quad \text{(n times)} \quad n < 0
+	\end{array}
+\right.
+\end{equation*}
+
+So any abelian group $A$ is a $\mathbb{Z}$-module. Conversely, it turns out that every $\mathbb{Z}$-module is an abelian group.
+\end{ex}
+
+Now we define the notion of module homomorphisms.
+
+\begin{defn}[Module Homomorphisms]
+Let $M$ and $N$ be $R$-modules. A function $\varphi: M \to N$ is a module homomorphism if for all $r \in R$ and $x, y \in M$ we have
+
+\begin{enumerate}
+\item $\varphi(x + y) = \varphi(x) + \varphi(y)$
+\item $\varphi(rx) = r\varphi(x)$
+\end{enumerate}
+\end{defn}
+
+Now our goal is to arrive at a definition of tensor products of modules, which will involve free $Z$-modules, so let's first go over the definition of a free module and an important universal property of free modules.
+
+\subsubsection*{Freely Generated Modules}
+
+\begin{defn}[Free Modules]
+An $R$-module $F$ is free on a subset $A \subseteq F$ if for every nonzero $x \in F$, there are unique nonzero elements $r_1, r_2, \dots, r_n \in R$ and unique $a_1, a_2, \dots, a_n \in A$ such that $x = r_1a_1 + r_2a_2 + \dots+ r_na_n$ for some positive integer $n$. We call $A$ a basis for $F$ and that $A$ is the set of free generators of $F$.
+\end{defn}
+
+Notice that when $R$ is a field, then $A$ is the set of basis vectors (will also need linear independence) for the vector space $F$ over the field $R$.
+
+We now talk about an important universal property of free modules, which is a precursor to the defining universal property of tensor products.
+
+\begin{prop}[Universal Property of Free Modules]
+For any set $A$ there is a free $R$-module $F(A)$ on $A$ such that if $M$ is any $R$-module and $\varphi: A \to M$ is any map of sets, then we have the following commutative diagram:
+
+\begin{equation*}
+\begin{xy}
+(0,0)*+{A}="v1"; (30,0)*+{F(A)}="v2"; (30, -30)*+{M}="v3";
+{\ar@{^{(}->} "v1";"v2"}?*!/_2mm/{\iota};
+{\ar "v1";"v3"}?*!/^4mm/{\varphi};
+{\ar@{-->} "v2";"v3"}?*!/_4mm/{\exists ! \Phi}
+\end{xy}
+\end{equation*}
+
+where $\Phi$ is an $R$-module homomorphism.
+\end{prop}
+
+\begin{proof}
+By convention, if $A = \emptyset$ we define $F(A) = \{0\}$. In that case, $\varphi$ is the unique map of sets $\emptyset \to M$, $F(A)$ is also the empty set and $\iota$ is the identity map, which means $\Phi = \varphi$. Otherwise, if $A$ is nonempty, then let $F(A)$ be the collection of all set functions $f: A \to R$ such that $f(a) = 0$ for all but finitely many $a \in A$. We can make $F(A)$ into an $R$-module by pointwise addition of functions and pointwise multiplication of ring elements times a function, so we have for all $f, g \in F(A)$ and $r \in R$:
+\begin{equation*}
+\begin{array}{cc}
+(f +g)(a) = f(a) + g(a) \\
+(rf)(a) = r(f(a))
+\end{array}
+\end{equation*}
+for all $x \in A$.
+
+Let's just check to make sure this indeed gives us an $R$-module. Let $r,s \in R$, $f, g \in F(A)$. For each $a \in A$:
+\begin{enumerate}
+\item $(r+s)f$ gives $(r+s)(f(a))$ which equals $r(f(a)) + s(f(a))$ (Since $f(a)$ is an element in $R$) which finally gives $rf + sf$. So $(r+s)f=rf + sf$.
+\item $r(f+g)$ gives $r(f(a)+g(a))$ and since $f(a), g(a)$ are elements in $R$, this gives $r(f(a)) + r(g(a)) = rf + rg$.
+\item $(rs)f = (rs)(f(a)) = r(s(f(a))) = r(sf)$.
+\end{enumerate}
+
+So $F(A)$ is indeed an $R$-module. Now we need to show $F(A)$ is freely generated by $A$. We define the map $\iota: A \to F(A)$ by $a \mapsto f_a$ where
+\begin{equation*}
+f_a(x) = \left\{
+\begin{array}{lr}
+1 \quad x = a \\
+0 \quad \text{otherwise}
+\end{array}
+\right.
+\end{equation*}
+
+Since $\iota$ is injective (Let $a,b \in A$ such that $f_a = f_b$, then $f_a$ and $f_b$ both take the value $1$ at the same point $x$ which is both equal to $a$ and equal to $b$, so $a=b$), we see that $\iota$ can be seen as an embedding of $A$ in $F(A)$. This allows us to view $F(A)$ as all finite $R$-linear combinations of elements of $A$ in the following way:
+
+Let $f: A \to R$ be a nonzero element of $F(A)$. Then by definition of $F(A)$, $f$ takes on a nonzero value (in $R$) for finitely many points in $A$, say $a_1, a_2, \dots, a_n$. So at each $a_i$, $f$ takes on a nonzero value, say $r_i$. That means we can uniquely write $f$ as the $R$-linear combination $r_1f_{a_i} + r_2f_{a_2} + \dots + r_nf_{a_n}$. Hence, $F(A)$ is indeed freely generated by $A$.
+
+Now given the map on sets $\varphi: A \to M$, we define $\Phi: F(A) \to M$ by $\sum_{i = 1}^{n}r_if_{a_i} \mapsto \sum_{i=1}^{n}r_i\varphi(a_i)$. Let's verify that $\Phi$ is indeed a well-defined $R$-module homomorphism. Let $r \in R$ and $f, g \in F(A)$. We have just established that $f$ can be written uniquely as $\sum_{i=1}^{n}r_if_{a_i}$ and likewise $g$ can be written uniquely as $\sum_{k=1}^{m}s_kg_{b_k}$. Then:
+
+\begin{enumerate}
+\item \emph{well-defined: } Since elements $f \in F(A)$ are written uniquely as formal $R$-linear sums of $f_a$'s and $\varphi$ is well-defined, $\Phi$ is well-defined. 
+\item $\Phi(rf) = \Phi(r\sum_{i=1}^{n}r_if_{a_i}) = r\sum_{i=1}^{n}r_i\varphi(a_i) = r\Phi(f)$
+\item $\Phi(f + g) = \Phi(\sum_{i=1}^{n}r_if_{a_i} + \sum_{k=1}^{m}s_kg_{b_k}) = \Phi(r_1f_{a_1} + r_2f_{a_2} + \dots + r_nf_{a_n} + s_1g_{b_1} + s_2g_{b_2} + \dots s_mg_{b_m}) = r_1\varphi(a_1) + r_2\varphi(a_2) + \dots + r_n\varphi(a_n) + s_1\varphi(b_1) + s_2\varphi(b_2) + \dots + s_m\varphi(b_m) = \sum_{i=1}^{n}r_i\varphi(a_i) + \sum_{k=1}^{m}s_k\varphi(b_k) = \Phi(f) + \Phi(g)$.
+\end{enumerate}
+
+Hence, $\Phi$ is a well-defined $R$-module homomorphism and by definition, $\Phi$ restricted to $A \subseteq F(A)$ is $\varphi$. Finally, since $F(A)$ is generated by $A$, which means the elements of $F(A)$ are uniquely written as formal $R$-linear sums of elements of $A$, once we know the values of $\varphi$ on $A$, $\varphi$'s values on elements of $F(A)$ are uniquely determined. So $\Phi$ is the unique extension of $\varphi$ to all of $F(A)$.
+\end{proof}
+
+\subsection*{Tensor Products of Modules}
+
+\subsubsection*{Basic Definition}
+
+We now have the algebraic framework we need to define the tensor product of modules:
+
+\begin{defn}[Tensor Product of Modules]
+Let $R$ be a ring with right $R$-module $M$ and left $R$-module $N$. Then the free $\mathbb{Z}$-module on the set $M \times N$, which we will write $\mathbb{Z}(M \times N)$ is the set of formal $\mathbb{Z}$-linear sums of elements $(m,n) \in M \times N$. Since this is a free $\mathbb{Z}$-module, it is an abelian group. Quotienting out the subgroup $H$ generated by elements of the form
+
+\begin{equation*}
+\begin{array}{cc}
+(m, (n_1 + n_2)) - (m, n_1) - (m, n_2) \\
+((m_1 + m_2), n) - (m_1, n) - (m_2, n) \\
+(mr, n) - (m, rn)
+\end{array}
+\end{equation*}
+
+produces the abelian quotient group $\mathbb{Z}(M \times N) / H$ which we call the tensor product of $M$ and $N$ over $R$, written $M \bigotimes_{R} N$. We write cosets $(m,n)$ in this abelian group as $m \otimes n$ and call them simple tensors in the tensor product. Elements of $M \bigotimes_{R} N$ are formal $\mathbb{Z}$-linear sums of simple tensors.
+\end{defn}
+
+Note that quotienting out by that particular subgroup basically enforces the following relations (which we write with tensor notation now):
+
+\begin{equation*}
+\begin{array}{cc}
+m \otimes (n_1 + n_2) = m \otimes n_1 + m \otimes n_2 \\
+(m_1 + m_2) \otimes n = m_1 \otimes n + m_2 \otimes n \\
+mr \otimes n = m \otimes rn
+\end{array}
+\end{equation*}
+
+Using these relations we can look at the following examples:
+
+\begin{ex}
+For any tensor product $M \bigotimes_R N$ we have $m \otimes 0 = m \otimes (0 + 0) = m \otimes 0 + m \otimes 0$, so $m \otimes 0 = 0$. Similarly, $0 \otimes n = (0 + 0) \otimes n = 0 \otimes n + 0 \otimes n$, so $0 \otimes n = 0$.
+\end{ex}
+
+\begin{ex}
+$\mathbb{Z}/n \bigotimes_R \mathbb{Z}/m = 0$ whenever $n,m$ are relatively prime. This is because since $n,m$ are relatively prime, for any $a \in \mathbb{Z}/n$, $ma = a$, so for any $a \in \mathbb{Z}/n, b \in \mathbb{Z}/m$, $a \otimes b = ma \otimes b = a \otimes mb = a \otimes 0 = 0$.
+\end{ex}
+
+More examples to come...
+
+\subsubsection*{Universal Property of Tensor Products}
+
+There is a canonical map $\iota: M \times N \to M \bigotimes_R N$ defined by $(m,n) \mapsto m \otimes n$.
+
+\begin{defn}[$R$-balanced map]
+Let $M$ be a right $R$-module, $N$ be a left $R$-module and $L$ be an abelian group. Then a map $\varphi: M \times N \to L$ is $R$-balanced if it is linear in each variable and additionally, $\varphi(mr, n) = \varphi(m, rn)$ for all $m \in M, n \in N, r \in R$.
+\end{defn}
+
+So the canonical map $\iota$ is $R$-balanced.
+
+We now have the analogous universal property of the tensor product:
+
+\begin{prop}[Universal Property of the Tensor Product]
+Let $M$ be a right $R$-module, $N$ be a left $R$-module and $L$ be any abelian group. Then there is a bijection between $R$-balanced maps $\varphi: M \times N \to L$ and group homomorphisms $\Phi: M \bigotimes_R N \to L$ that satisfies the commutative triangle:
+
+\begin{equation*}
+\begin{xy}
+(0,0)*+{M \times N}="v1"; (30,0)*+{M \bigotimes_R N}="v2"; (30, -30)*+{L}="v3";
+{\ar "v1";"v2"}?*!/_3mm/{\iota};
+{\ar "v1";"v3"}?*!/^3mm/{\varphi};
+{\ar "v2";"v3"}?*!/_3mm/{\Phi};
+\end{xy}
+\end{equation*}
+\end{prop}
+
+\begin{proof}
+In the first direction, let $\Phi$ be a group homomorphism from $M \bigotimes_R N \to L$. Then defining $\varphi = \Phi \circ \iota$, we have a map from $M \times N \to L$. We need to check that $\varphi$ is in fact $R$-balanced. Let $m_1, m_2 \in M$ and $n \in N$. Then $\varphi(m_1 + m_2, n) = \Phi(\iota(m_1 + m_2, n)) = \Phi((m_1 + m_2) \otimes n) = \Phi(m_1 \otimes n + m_2 \otimes n)$. Since $\Phi$ is a group homomorphism, we have $\Phi(m_1 \otimes n + m_2 \otimes n) = \Phi(m_1 \otimes n) + \Phi(m_2 \otimes n) = \Phi(\iota(m_1, n)) + \Phi(\iota(m_2, n)) = \varphi(m_1, n) + \varphi(m_2, n)$. So $\varphi$ is linear in $M$. Similarly we can show that $\varphi$ is linear in $N$. Let $r \in R$, then $\varphi(mr, n) = \Phi(\iota(mr, n)) = \Phi(mr \otimes n) = \Phi(m \otimes rn) = \Phi(\iota(m, rn)) = \varphi(m, rn)$. So $\varphi$ is $R$-balanced in $M \times N$.
+
+In the other direction, using Proposition 1 the $R$-balanced map $\varphi$ defines a $\mathbb{Z}$-module homomorphism $\varphi'$ from the free $\mathbb{Z}$ module $\mathbb{Z}(M \times N)$ to $L$ such that $\varphi'(m, n) = \varphi(m, n)$. Since $\varphi$ is $R$-balanced, $\varphi'$ maps elements of the form that generated the subgroup $H$ in our definition of the tensor product to $0$, so the kernel of $\varphi'$ contains $H$. Hence, $\varphi'$ induces a group homomorphism $\Phi$ on the quotient group $M \bigotimes_R N$ to $L$ by $\Phi(m \otimes n) = \varphi'(m, n) = \varphi(m, n)$. Since the elements $m \otimes n$ generate $M \bigotimes_R N$, $\Phi$ is uniquely determined by this equation.
+\end{proof}
+
+We now have to consider the module structure of the tensor product. Notice that if $R$ is a commutative ring, then since $rm = mr$, $M \bigotimes_R N$ is a left $R$-module given by:
+
+\begin{equation*}
+r(m \otimes n) = (rm) \otimes n = (mr) \otimes n = m \otimes (rn)
+\end{equation*}
+
+In this case, Proposition 2 gives a bijection between $R$-bilinear maps  $M \times N \to L$ (no longer needed to be $R$-balanced because of this commutativity relation above) and $R$-module homomorphisms $M \bigotimes_R N \to L$.
+
+We have the following fact about the tensor product:
+
+\begin{prop}[Tensor Product is Associative]
+$X \bigotimes (Y \bigotimes Z) \cong (X \bigotimes Y) \bigotimes Z$.
+\end{prop}
+
+We actually have two proofs of this fact. The first uses only the universal property of tensor products, while the second uses an application of the Yoneda Lemma (see \cite{liu_yoneda_2018}).
+
+\begin{proof}[Proof using Universal Property]
+For each $x \in X$, we define a map
+\begin{align*}
+\phi: Y \times Z &\to (X \bigotimes Y) \bigotimes Z \\
+(y, z) &\mapsto (x \otimes y) \otimes z
+\end{align*}
+
+This map is bilinear because $\phi(y_1 + y_2, z) = (x \otimes (y_1 + y_2)) \otimes z = ((x \otimes y_1) + (x \otimes y_2)) \otimes z = (x \otimes y_1) \otimes z + (x \otimes y_2) \otimes z$ and similarly for the $z$-coordinate.
+
+Since $\phi$ is bilinear, by the universal property it induces a linear map
+\begin{align*}
+\Phi_x: Y \bigotimes Z &\to (X \bigotimes Y) \bigotimes Z \\
+y \otimes z &\mapsto (x \otimes y) \otimes z
+\end{align*}
+
+Now we define a map
+\begin{align*}
+\delta: X \times (Y \otimes Z) &\to (X \bigotimes Y) \bigotimes Z \\
+(x, \sum\limits_{i=1}^{n}y_i \otimes z_i) &\mapsto \Phi_x(\sum\limits_{i=1}^{n}y_i \otimes z_i) = \sum\limits_{i=1}^{n}(x \otimes y_i) \otimes z_i
+\end{align*}
+
+Again, this map is bilinear (because of linearity of $\Phi_x$ and properties of the tensor product), so by the universal property it induces a linear map
+
+\begin{align*}
+\Delta: X \bigotimes (Y \otimes Z) &\to (X \bigotimes Y) \bigotimes Z \\
+x \otimes (\sum\limits_{i=1}^{n}y_i \otimes z_i) = \sum\limits_{i=1}^{n}x \otimes (y_i \otimes z_i) &\mapsto \sum\limits_{i=1}^{n}(x \otimes y_i) \otimes z_i
+\end{align*}
+
+We construct the inverse by fixing $z \in Z$ and proceeding in a similar way to get
+
+\begin{align*}
+\Gamma: (X \bigotimes Y) \otimes Z &\to X \bigotimes (Y \bigotimes Z) \\
+\sum\limits_{i=1}^{n}(x_i \otimes y_i) \otimes z &\mapsto \sum\limits_{i=1}^{n}x_i \otimes (y_i \otimes z)
+\end{align*}
+
+Notice that in $\Delta$ there is only one $x$ and many $z$ and in $\Gamma$ there is only one $z$ and many $x$. One might think that this is a problem but we check that $\Delta, \Gamma$ are indeed mutually inverse:
+
+\begin{align*}
+\Gamma(\Delta(\sum\limits_{i=1}^{n}x \otimes (y_i \otimes z_i))) &= \Gamma(\sum\limits_{i=1}^{n}(x \otimes y_i) \otimes z_i) \\
+&= \sum\limits_{i=1}^{n}\Gamma((x \otimes y_i) \otimes z_i) \quad \text{By linearity of $\Gamma$} \\
+&= \sum\limits_{i=1}^{n}x \otimes (y_i \otimes z_i)
+\end{align*}
+
+and
+
+\begin{align*}
+\Delta(\Gamma(\sum\limits_{i=1}^{n}(x_i \otimes y_i) \otimes z)) &= \Delta(\sum\limits_{i=1}^{n}x_i \otimes (y_i \otimes z)) \\
+&= \sum\limits_{i=1}^{n}\Delta(x_i \otimes (y_i \otimes z)) \quad \text{By linearity of $\Delta$} \\
+&= \sum\limits_{i=1}^{n}(x_i \otimes y_i) \otimes z
+\end{align*}
+\end{proof}
+
+\begin{proof}[Proof using Yoneda Lemma]
+By the Yoneda Lemma, if two representable functors $H^A, H^{A'}$ are isomorphic, then that means $A \cong A'$. We first show that the functor
+\begin{align*}
+\textbf{Bilin}(U, V; -): \textbf{Vect}_k &\to \textbf{Set} \\
+\text{Vector space} \  W &\mapsto \text{set of bilinear maps} \  U \times V \to W
+\end{align*}
+is representable by showing that it is naturally isomorphic to the functor $H^{U \bigotimes V} = \textbf{Vect}(U \bigotimes V, -)$
+
+We define the mapping $t_W: \textbf{Bilin}(U,V; W) \to \textbf{Vect}(U \bigotimes V, W)$ by $t_W(\varphi) = \Phi$ where $\Phi$ is the linear map out of the tensor product uniquely determined by $\varphi$ given by the universal property of tensor products. We define $t_W^{-1}: \textbf{Vect}(U \bigotimes V, W) \to \textbf{Bilin}(U,V; W)$  by $t_W^{-1}(\Phi) = \varphi$. Clearly $t_W, t_W^{-1}$ are inverse to each other. Let $f: W \to W'$. We need to show that the following naturality square holds:
+
+\begin{equation*}
+\begin{xy}
+(0,0)*+{\textbf{Bilin}(U,V;W)}="v1"; (60,0)*+{\textbf{Bilin}(U,V;W')}="v2"; (0,-30)*+{\textbf{Vect}(U \bigotimes V, W)}="v3"; (60,-30)*+{\textbf{Vect}(U \bigotimes V, W')}="v4";
+{\ar "v1";"v2"}?*!/_4mm/{f \circ -};
+{\ar "v1";"v3"}?*!/^4mm/{t_W};
+{\ar "v2";"v4"}?*!/_4mm/{t_{W'}};
+{\ar "v3";"v4"}?*!/^4mm/{\textbf{Vect}(U \bigotimes V, f) = f \circ -};
+\end{xy}
+\end{equation*}
+
+This clearly holds because of the following universal property:
+
+\begin{equation*}
+\begin{xy}
+(0,0)*+{U \times V}="v1"; (60,0)*+{U \bigotimes V}="v2"; (60, -30)*+{W}="v3"; (60, -60)*+{W'}="v4";
+{\ar "v1";"v2"}?*!/_3mm/{\iota};
+{\ar "v2";"v3"}?*!/_3mm/{\Phi};
+{\ar "v1";"v3"}?*!/^3mm/{\varphi};
+{\ar "v3";"v4"}?*!/_3mm/{f};
+{\ar "v1";"v4"}?*!/^5mm/{f \circ \varphi};
+{\ar@/^3pc/ "v2";"v4"}?*!/_6mm/{f \circ \Phi};
+\end{xy}
+\end{equation*}
+
+So we have the following chain of isomorphisms:
+
+\begin{align*}
+\textbf{Vect}(X \bigotimes (Y \bigotimes Z), -) &\cong \textbf{Bilin}(X, Y \bigotimes Z; -) \\
+&\cong \textbf{3-lin}(X, Y, Z; -) \\
+&\cong \textbf{Bilin}(X \bigotimes Y, Z; -) \\
+&\cong \textbf{Vect}((X \bigotimes Y) \bigotimes Z, -)
+\end{align*}
+\end{proof}
+
+\nocite{*}
+\bibliographystyle{alpha}
+\bibliography{reftensorproducts}
+
+\end{document}
