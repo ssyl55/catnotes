@@ -1,0 +1,45 @@
+\documentclass[11pt]{article}
+
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage[arrow]{xy}
+
+\pagestyle{headings}
+
+\theoremstyle{definition}
+\newtheorem*{defn}{Definition}
+
+\theoremstyle{definition}
+\newtheorem{ex}{Example}
+
+\theoremstyle{plain}
+\newtheorem{theo}{Theorem}
+
+\theoremstyle{plain}
+\newtheorem{prop}{Proposition}
+
+\theoremstyle{plain}
+\newtheorem{lem}{Lemma}
+
+\begin{document}
+
+\author{Stephen Liu}
+\title{2-Categories}
+\date{August 15, 2018}
+
+\maketitle
+
+\begin{abstract}
+Some introductory notes on 2-Categories.
+\end{abstract}
+
+The key thing to remember is that a 2-Category is just a category enriched in $\textbf{Cat}$, the category of small categories (A normal category is a category enriched in $\textbf{Set}$). So the hom-sets of a 2-Category are themselves a small category. And that's all I have to say about that\dots
+
+\nocite{*}
+\bibliographystyle{alpha}
+\bibliography{ref2cats}
+
+\end{document}
