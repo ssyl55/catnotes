@@ -36,7 +36,84 @@
 Some introductory notes on 2-Categories.
 \end{abstract}
 
-The key thing to remember is that a 2-Category is just a category enriched in $\textbf{Cat}$, the category of small categories (A normal category is a category enriched in $\textbf{Set}$). So the hom-sets of a 2-Category are themselves a small category. And that's all I have to say about that\dots
+The key thing to remember is that a 2-Category is just a category enriched in $\textbf{Cat}$, the category of small categories (A normal category is a category enriched in $\textbf{Set}$). So the hom-sets of a 2-Category are themselves a small category. First let's recast the definition of a category in terms of diagrams:
+
+\begin{defn}[Category]
+A (locally small) category $\mathscr{A}$ consists of a collection of
+
+\begin{enumerate}
+\item objects $A, B, C, \dots$
+\item sets of morphisms $\mathscr{A}(A,B), \mathscr{A}(B,C), \dots$
+\end{enumerate}
+
+such that for every object $A$, there is a function, called \emph{identity}
+\begin{equation*}
+1_A: 1 \to \mathscr{A}(A,A)
+\end{equation*}
+
+and for every triple of objects $A, B, C$, there is a function, called \emph{composition}
+\begin{equation*}
+c_{ABC}: \mathscr{A}(A,B) \times \mathscr{A}(B,C) \to \mathscr{A}(A,C)
+\end{equation*}
+
+These functions obey the following commutative diagrams:
+
+\begin{equation*}\tag*{\emph{Associativity Axiom}}
+\begin{xy}
+(0,0)*+{\mathscr{A}(A,B) \times \mathscr{A}(B,C) \times \mathscr{A}(C,D)}="v1";
+(70,0)*+{\mathscr{A}(A,B) \times \mathscr{A}(B,D)}="v2";
+(0,-30)*+{\mathscr{A}(A,C) \times \mathscr{A}(C,D)}="v3";
+(70,-30)*+{\mathscr{A}(A,D)}="v4";
+{\ar "v1";"v2"}?*!/_4mm/{1 \times c_{BCD}};
+{\ar "v1";"v3"}?*!/^10mm/{c_{ABC} \times 1};
+{\ar "v2";"v4"}?*!/_8mm/{c_{ABD}};
+{\ar "v3";"v4"}?*!/^4mm/{c_{ACD}};
+\end{xy}
+\end{equation*}
+
+\begin{equation*}\tag*{\emph{Identity Axiom}}
+\begin{xy}
+(0,0)*+{1 \times \mathscr{A}(A,B)}="v1";
+(40,0)*+{\mathscr{A}(A,B)}="v2";
+(80,0)*+{\mathscr{A}(A,B) \times 1}="v3";
+(0,-30)*+{\mathscr{A}(A,A) \times \mathscr{A}(A,B)}="v4";
+(40,-30)*+{\mathscr{A}(A,B)}="v5";
+(80,-30)*+{\mathscr{A}(A,B) \times \mathscr{A}(B,B)}="v6";
+{\ar "v2";"v1"}?*!/^4mm/{\cong};
+{\ar "v2";"v3"}?*!/_4mm/{\cong};
+{\ar "v1";"v4"}?*!/^8mm/{1_A \times 1};
+{\ar "v3";"v6"}?*!/_8mm/{1 \times 1_B};
+{\ar "v4";"v5"}?*!/^4mm/{c_{AAB}};
+{\ar "v6";"v5"}?*!/_4mm/{c_{ABB}};
+{\ar@{=} "v2";"v5"}
+\end{xy}
+\end{equation*}
+\end{defn}
+
+2-Categories have an analogous definition except that since we are enriched in \textbf{Cat}, $\mathscr{A}(A,B)$ are no longer sets, but rather small categories. Equivalently, $1_A, c_{ABC}$ are no longer functions but rather functors. With that, we have the following definition:
+
+\begin{defn}[2-Category]
+A 2-Category $\mathscr{A}$ consists of a collection of
+
+\begin{enumerate}
+\item objects, called 0-cells $A, B, C, \dots$
+\item for each pair of 0-cells $A,B$ a small category $\mathscr{A}(A,B)$ where the objects of $\mathscr{A}(A,B)$ are our familiar morphisms $f:A \to B$, also called 1-cells, and the morphisms in $\mathscr{A}(A,B)$, $\alpha: f \Rightarrow g$ are called 2-cells.
+\item for each 0-cell $A$, a functor
+\begin{equation*}
+1_A: 1 \to \mathscr{A}(A,A)
+\end{equation*}
+\item for each triple of 0-cells $A,B,C$ a bifunctor
+\begin{equation*}
+c_{ABC}: \mathscr{A}(A,B) \times \mathscr{A}(B,C) \to \mathscr{A}(A,C)
+\end{equation*}
+\end{enumerate}
+
+such that the associativity and identity diagrams above commute.
+\end{defn}
+
+Since $\mathscr{A}(A,B)$ is a category and composition is a functor now, there's more stuff going on, which we need to take a look at:
+
+
 
 \nocite{*}
 \bibliographystyle{alpha}
